@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT Dark PDF Converter</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+    <style>
+        /* --- APP UI STYLES (What you see while editing) --- */
+        body {
+            background-color: #202123;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Split Screen Layout */
+        .editor-pane, .preview-pane {
+            width: 50%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .editor-pane {
+            border-right: 1px solid #444;
+            display: flex;
+            flex-direction: column;
+        }
+
+        textarea {
+            width: 100%;
+            flex-grow: 1;
+            background-color: #343541;
+            color: #ececf1;
+            border: 1px solid #565869;
+            padding: 15px;
+            resize: none;
+            font-family: monospace;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .toolbar {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        button {
+            background-color: #10a37f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background-color: #1a7f64; }
+
+        /* --- PREVIEW / PDF STYLES (What gets printed) --- */
+        .preview-pane {
+            background-color: #343541; /* ChatGPT Background */
+            color: #d1d5db; /* ChatGPT Text */
+            font-family: 'Söhne', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Specific Markdown Styling to match ChatGPT */
+        .markdown-body pre {
+            background-color: #0d0d0d;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #3e3f4b;
+            overflow-x: auto;
+            margin-bottom: 1em;
+        }
+        .markdown-body code {
+            font-family: 'Consolas', 'Monaco', monospace; 
+            font-size: 0.9em;
+        }
+        .markdown-body p { margin-bottom: 1.2em; }
+        .markdown-body h1, .markdown-body h2 { 
+            color: #ececf1; border-bottom: 1px solid #444; padding-bottom: 0.3em; 
+        }
+        .markdown-body a { color: #10a37f; text-decoration: none; }
+
+        /* --- PRINT MAGIC --- 
+           This hides the editor and forces the browser to print ONLY the preview 
+           with the dark background colors kept intact.
+        */
+        @media print {
+            body {
+                display: block;
+                background-color: #343541 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .editor-pane { display: none; } /* Hide the input box */
+            .preview-pane { 
+                width: 100%; 
+                height: auto; 
+                overflow: visible; 
+                padding: 0;
+            }
+            /* Force background colors to show */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="editor-pane">
+        <div class="toolbar">
+            <h2>Paste Markdown Here</h2>
+            <button onclick="window.print()">🖨️ Save as PDF</button>
+        </div>
+        <textarea id="input" placeholder="# Paste your ChatGPT text here..."></textarea>
+    </div>
+
+    <div class="preview-pane">
+        <div id="output" class="markdown-body"></div>
+    </div>
+
+    <script>
+        const input = document.getElementById('input');
+        const output = document.getElementById('output');
+
+        // Configure Marked options
+        marked.setOptions({
+            breaks: true, // Handle line breaks like GitHub
+            highlight: function(code, lang) {
+                const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+                return hljs.highlight(code, { language }).value;
+            }
+        });
+
+        // Function to update preview
+        function updatePreview() {
+            const markdownText = input.value;
+            const htmlContent = marked.parse(markdownText);
+            output.innerHTML = htmlContent;
+        }
+
+        // Listen for typing
+        input.addEventListener('input', updatePreview);
+
+        // Load some default text
+        input.value = "# Hello!\nPaste your **ChatGPT** markdown here.\n\n```javascript\nconsole.log('Dark mode works!');\n```";
+        updatePreview();
+    </script>
+</body>
+</html>

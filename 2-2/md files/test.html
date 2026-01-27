@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>test.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<p>Alright Riyad 👍
+I’ll teach you <strong>LaTeX tables from absolute scratch</strong>, slowly, clearly, and with intuition.
+No slide-copying. You’ll <em>feel</em> what’s happening.</p>
+<hr>
+<h1 id="1%EF%B8%8F%E2%83%A3-first-idea-what-is-a-latex-table">1️⃣ First idea: What is a LaTeX table?</h1>
+<p>A table in LaTeX has <strong>two layers</strong>:</p>
+<ol>
+<li><strong><code>tabular</code></strong> → draws rows &amp; columns (MOST IMPORTANT)</li>
+<li><strong><code>table</code></strong> → floating container (caption, label, positioning)</li>
+</ol>
+<p>👉 You can use <strong><code>tabular</code> alone</strong> when learning.
+👉 <code>table</code> is optional.</p>
+<hr>
+<h1 id="2%EF%B8%8F%E2%83%A3-the-simplest-possible-table-start-here">2️⃣ The simplest possible table (start here)</h1>
+<pre class="hljs"><code><div>\begin{tabular}{c c c}
+A &amp; B &amp; C \\
+1 &amp; 2 &amp; 3 \\
+4 &amp; 5 &amp; 6
+\end{tabular}
+</div></code></pre>
+<h3 id="%F0%9F%94%8D-understand-this-line-by-line">🔍 Understand this line-by-line</h3>
+<h4 id="c-c-c"><code>{c c c}</code></h4>
+<p>This defines <strong>columns</strong>.</p>
+<ul>
+<li><code>c</code> → center aligned column</li>
+<li>3 times <code>c</code> → 3 columns</li>
+</ul>
+<p>Think:</p>
+<blockquote>
+<p>“I want 3 vertical boxes, centered”</p>
+</blockquote>
+<hr>
+<h4 id="%E2%86%92-column-separator"><code>&amp;</code> → column separator</h4>
+<h4 id="%E2%86%92-end-of-row"><code>\\</code> → end of row</h4>
+<p>So:</p>
+<pre class="hljs"><code><div>A &amp; B &amp; C \\   % row 1
+1 &amp; 2 &amp; 3 \\   % row 2
+</div></code></pre>
+<hr>
+<h1 id="3%EF%B8%8F%E2%83%A3-add-borders-this-is-what-people-usually-want">3️⃣ Add borders (this is what people usually want)</h1>
+<pre class="hljs"><code><div>\begin{tabular}{|c|c|c|}
+\hline
+A &amp; B &amp; C \\
+\hline
+1 &amp; 2 &amp; 3 \\
+\hline
+4 &amp; 5 &amp; 6 \\
+\hline
+\end{tabular}
+</div></code></pre>
+<h3 id="new-things">New things:</h3>
+<ul>
+<li><code>|</code> → vertical line</li>
+<li><code>\hline</code> → horizontal line</li>
+</ul>
+<p>📌 Visual rule:</p>
+<ul>
+<li><code>|</code> → vertical borders</li>
+<li><code>\hline</code> → horizontal borders</li>
+</ul>
+<hr>
+<h1 id="4%EF%B8%8F%E2%83%A3-column-alignment-types-very-important">4️⃣ Column alignment types (VERY IMPORTANT)</h1>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>l</code></td>
+<td>left aligned</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>centered</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td>right aligned</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<pre class="hljs"><code><div>\begin{tabular}{|l|c|r|}
+\hline
+Name &amp; Age &amp; GPA \\
+\hline
+Riyad &amp; 23 &amp; 3.75 \\
+Nabi &amp; 22 &amp; 3.60 \\
+\hline
+\end{tabular}
+</div></code></pre>
+<hr>
+<h1 id="5%EF%B8%8F%E2%83%A3-column-headers-bold">5️⃣ Column headers (bold)</h1>
+<pre class="hljs"><code><div>\textbf{Name} &amp; \textbf{Age} &amp; \textbf{GPA}
+</div></code></pre>
+<p>Full example:</p>
+<pre class="hljs"><code><div>\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Name} &amp; \textbf{Age} &amp; \textbf{GPA} \\
+\hline
+Riyad &amp; 23 &amp; 3.75 \\
+\hline
+\end{tabular}
+</div></code></pre>
+<hr>
+<h1 id="6%EF%B8%8F%E2%83%A3-the-table-environment-caption--numbering">6️⃣ The <code>table</code> environment (caption + numbering)</h1>
+<p>Now we wrap <code>tabular</code> inside <code>table</code>.</p>
+<pre class="hljs"><code><div>\begin{table}[h]
+\centering
+\caption{Student Information}
+\begin{tabular}{|c|c|c|}
+\hline
+Name &amp; Age &amp; GPA \\
+\hline
+Riyad &amp; 23 &amp; 3.75 \\
+\hline
+\end{tabular}
+\end{table}
+</div></code></pre>
+<h3 id="new-things">New things:</h3>
+<ul>
+<li><code>[h]</code> → place table <strong>here</strong></li>
+<li><code>\centering</code> → center table</li>
+<li><code>\caption{}</code> → table title</li>
+</ul>
+<hr>
+<h1 id="7%EF%B8%8F%E2%83%A3-common-beginner-mistakes-you-must-know">7️⃣ Common beginner mistakes (you MUST know)</h1>
+<h3 id="%E2%9D%8C-forgetting">❌ Forgetting <code>\\</code></h3>
+<pre class="hljs"><code><div>A &amp; B &amp; C   % WRONG
+</div></code></pre>
+<h3 id="%E2%9D%8C-extra">❌ Extra <code>&amp;</code></h3>
+<pre class="hljs"><code><div>A &amp; B &amp; C &amp; \\   % WRONG
+</div></code></pre>
+<p>Rule:</p>
+<blockquote>
+<p>Number of <code>&amp;</code> = columns − 1</p>
+</blockquote>
+<hr>
+<h1 id="8%EF%B8%8F%E2%83%A3-merging-columns-multicolumn--basic">8️⃣ Merging columns (<code>\multicolumn</code>) — basic</h1>
+<pre class="hljs"><code><div>\multicolumn{2}{c}{Total}
+</div></code></pre>
+<p>Example:</p>
+<pre class="hljs"><code><div>\begin{tabular}{|c|c|c|}
+\hline
+Name &amp; Marks &amp; Grade \\
+\hline
+Riyad &amp; \multicolumn{2}{c|}{85 (A)} \\
+\hline
+\end{tabular}
+</div></code></pre>
+<p>Meaning:</p>
+<blockquote>
+<p>Merge 2 columns, center text, keep right border</p>
+</blockquote>
+<hr>
+<h1 id="9%EF%B8%8F%E2%83%A3-mental-model-remember-this-forever">9️⃣ Mental model (remember this forever)</h1>
+<p>Think of tables like this:</p>
+<pre class="hljs"><code><div>|  cell  |  cell  |  cell  |
+    &amp;        &amp;        \\
+</div></code></pre>
+<ul>
+<li><code>&amp;</code> → move right</li>
+<li><code>\\</code> → go down</li>
+</ul>
+<hr>
+<h1 id="%F0%9F%94%A5-your-practice-task-do-this">🔥 Your practice task (DO THIS)</h1>
+<p>Create a table with:</p>
+<ul>
+<li>3 columns: <strong>Course | Code | Grade</strong></li>
+<li>At least 3 rows</li>
+<li>Borders</li>
+<li>Caption</li>
+</ul>
+<p>Write it, paste it here, and I’ll <strong>correct it line by line</strong> like a real teacher.</p>
+<p>Next lesson (if you want):</p>
+<ul>
+<li>column width control (<code>p{}</code>)</li>
+<li>row spacing</li>
+<li>professional tables (<code>booktabs</code>)</li>
+<li>long tables (multiple pages)</li>
+</ul>
+<p>Your move 💪</p>
+
+</body>
+</html>
