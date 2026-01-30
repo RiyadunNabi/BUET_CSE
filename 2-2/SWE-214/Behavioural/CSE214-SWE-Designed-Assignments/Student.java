@@ -15,61 +15,16 @@ public class Student {
     public boolean isEnrolledIn(Course c) { return enrolledCourses.contains(c); }
     public boolean isWaitlistedIn(Course c) { return waitlistedCourses.contains(c); }
 
-    // public void enrollIn(Course c) {
-    //     if (c == null) return;
-    //     if (!c.isVisibleToStudents()) {
-    //         System.out.println("Course " + c.code + " is not available for student enrollment.");
-    //         return;
-    //     }
-    //     if (enrolledCourses.contains(c)) {
-    //         System.out.println(name + " is already enrolled in " + c.code);
-    //         return;
-    //     }
-    //     c.tryEnroll(this);
-    // }
+
     public void addCourseDirect(Course c) {
         if (!enrolledCourses.contains(c)) enrolledCourses.add(c);
         waitlistedCourses.remove(c);
     }
 
-    // public void waitlistFor(Course c) {
-    //     if (c == null) return;
-    //     if (!c.isVisibleToStudents()) {
-    //         System.out.println("Course " + c.code + " is not available.");
-    //         return;
-    //     }
-    //     if (waitlistedCourses.contains(c)) {
-    //         System.out.println(name + " is already waitlisted for " + c.code);
-    //         return;
-    //     }
-    //     if (enrolledCourses.contains(c)) {
-    //         System.out.println(name + " is already enrolled in " + c.code + "; cannot waitlist.");
-    //         return;
-    //     }
-    //     c.addToWaitlist(this);
-    // }
     public void addWaitlistDirect(Course c) {
         if (!waitlistedCourses.contains(c)) waitlistedCourses.add(c);
     }
 
-    // public void dropCourse(Course c) {
-    //     if (c == null) return;
-    //     c.dropStudent(this);
-    // }
-    
-
-    // For Course to call directly:
-    // public void addEnrolledCourseDirect(Course c) {
-    //     if (!enrolledCourses.contains(c)) {
-    //         enrolledCourses.add(c);
-    //     }
-    //     waitlistedCourses.remove(c);
-    // }
-    // public void addWaitlistCourseDirect(Course c) {
-    //     if (!waitlistedCourses.contains(c)) {
-    //         waitlistedCourses.add(c);
-    //     }
-    // }
 
     public void removeCourseDirect(Course c) {
         enrolledCourses.remove(c);

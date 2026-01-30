@@ -41,23 +41,16 @@ public class RegistrarSystem implements ICourseRegistrationMediator {
             return;
         }
 
-        // Centralized Validation Logic
         if (!c.isVisibleToStudents()) {
             System.out.println("Course " + c.code + " is not available(not visible) for student enrollment.");
             return;
         }
         if (s.isEnrolledIn(c)) {
-            // System.out.println(s.name + " is already enrolled in " + c.code);
             System.out.println("Already enrolled: " + s.name + " in " + c.code);
             return;
         }
-
-        // Delegate to Course to check capacity/status
-        // Note: Course no longer calls s.addEnrolledCourseDirect()
         boolean success = c.tryEnroll(s); 
-        
         if (success) {
-            // Mediator syncs the other side of the relationship
             s.addCourseDirect(c);
         }
     }
@@ -73,12 +66,10 @@ public class RegistrarSystem implements ICourseRegistrationMediator {
             return;
         }
         if (s.isWaitlistedIn(c)) {
-            // System.out.println(s.name + " is already waitlisted for " + c.code);
             System.out.println("Already waitlisted: " + s.name + " for " + c.code);
             return;
         }
         if (s.isEnrolledIn(c)) {
-            // System.out.println(s.name + " is already enrolled in " + c.code);
             System.out.println("Already enrolled; no need to waitlist: " + s.name + " for " + c.code);
             return;
         }
@@ -95,7 +86,6 @@ public class RegistrarSystem implements ICourseRegistrationMediator {
         Course c = getCourse(courseCode);
         if (s == null || c == null) return;
 
-        // Check if actually enrolled or waitlisted
         boolean wasEnrolled = s.isEnrolledIn(c);
         boolean wasWaitlisted = s.isWaitlistedIn(c);
 
@@ -103,10 +93,8 @@ public class RegistrarSystem implements ICourseRegistrationMediator {
             System.out.println(s.name + " is neither enrolled nor waitlisted for " + c.code);
             return;
         }
-        // 1. Update Student State
         s.removeCourseDirect(c);
 
-        // 2. Update Course State
         c.removeStudent(s);
         
         if(wasEnrolled && !wasWaitlisted) {
@@ -115,20 +103,18 @@ public class RegistrarSystem implements ICourseRegistrationMediator {
             System.out.println("Removed from waitlist: " + s.name + " for " + c.code);
         }
 
-        // 3. Handle Waitlist Promotion (Logic moved here or coordinated here)
-        // If a spot opened up in an enrolled course, promote someone
         if (wasEnrolled && c.hasSpace() && c.hasWaitlist()) {
             promoteNextStudent(c);
         }
     }
 
     private void promoteNextStudent(Course c) {
-        Student promoted = c.popNextWaitlisted(); // Course gives us the student
+        Student promoted = c.popNextWaitlisted();
         if (promoted != null) {
-            promoted.removeCourseDirect(c); // Remove from waitlist status in Student
+            promoted.removeCourseDirect(c);
             
-            c.addStudentDirect(promoted);   // Add to enrolled in Course
-            promoted.addCourseDirect(c);    // Add to enrolled in Student
+            c.addStudentDirect(promoted); 
+            promoted.addCourseDirect(c);
             
             System.out.println("Promoted from waitlist: " + promoted.name + " into " + c.code);
         }

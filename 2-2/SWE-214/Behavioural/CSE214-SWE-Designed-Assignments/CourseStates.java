@@ -27,7 +27,7 @@ class OpenState implements ICourseState {
     
     @Override
     public boolean canTransitionTo(CourseStatus nextStatus) {
-        return nextStatus == CourseStatus.CLOSED || nextStatus == CourseStatus.DRAFT || nextStatus == CourseStatus.CANCELLED || nextStatus == CourseStatus.FULL;
+        return nextStatus == CourseStatus.CLOSED || nextStatus == CourseStatus.DRAFT || nextStatus == CourseStatus.CANCELLED ;
     }
 
     @Override
