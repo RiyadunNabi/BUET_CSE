@@ -151,3 +151,43 @@ public class a_SlideCode_StarbuzzCoffee {
         System.out.println(beverage3.getDescription() + " $" + beverage3.cost());
     }
 }
+
+
+
+
+
+
+/*
+// =========================
+// ❌ THE PROBLEM: Superclass Bloat
+// =========================
+
+class BeverageBad {
+    public String description;
+    // PAIN POINT: Hardcoding condiments as booleans
+    public boolean milk;
+    public boolean soy;
+    public boolean mocha;
+    public boolean whip;
+
+    public float cost() {
+        float condimentCost = 0.0f;
+        if (milk) condimentCost += 0.10f;
+        if (soy) condimentCost += 0.15f;
+        if (mocha) condimentCost += 0.20f;
+        if (whip) condimentCost += 0.10f;
+        return condimentCost;
+    }
+    
+    // Getters and setters for every single condiment...
+    // What if we add "Caramel"? We have to Open this class and Modify it (Violates Open/Closed Principle)
+}
+
+class DarkRoastBad extends BeverageBad {
+    @Override
+    public float cost() {
+        return 1.99f + super.cost(); // Logic is scattered
+    }
+}
+
+*/

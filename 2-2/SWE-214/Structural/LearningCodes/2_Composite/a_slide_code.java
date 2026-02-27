@@ -192,3 +192,39 @@ public class a_slide_code {
         allMenus.print();
     }
 }
+
+
+
+
+
+/*
+// =========================
+// ❌ THE PROBLEM: Treating Leaves and Nodes differently
+// =========================
+
+class MenuItem {
+    String name;
+    public void print() { System.out.println("Item: " + name); }
+}
+
+class Menu {
+    ArrayList<MenuItem> items = new ArrayList<>();
+    ArrayList<Menu> subMenus = new ArrayList<>(); // Separate list for sub-menus!
+
+    public void add(MenuItem item) { items.add(item); }
+    public void add(Menu menu) { subMenus.add(menu); }
+
+    public void print() {
+        // Loop 1: Print items
+        for (MenuItem item : items) {
+            item.print();
+        }
+        // Loop 2: Print sub-menus (Logic starts duplicating)
+        for (Menu menu : subMenus) {
+            menu.print();
+        }
+    }
+}
+
+
+*/
