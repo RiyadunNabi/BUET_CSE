@@ -19,6 +19,7 @@ abstract class Beverage {
 class Espresso extends Beverage {
     public Espresso() {
         description = "Espresso";
+        // super.
     }
 
     @Override
@@ -58,6 +59,8 @@ abstract class CondimentDecorator extends Beverage {
     // because they need to append their name to it.
     @Override
     public abstract String getDescription();
+    @Override
+    public abstract double cost();
 }
 
 // =========================
