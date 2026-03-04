@@ -32,6 +32,7 @@ class DoodlingApp:
         self.fourier_coeffs = None
         self.is_animating = False
         self.after_id = None
+        
         self.num_frames = 0
         self.center_offset = (0, 0)
         self.time_step = 0
