@@ -60,8 +60,8 @@ class DFTAnalyzer:
         
         # Vectorized Naive implementation
         n = np.arange(N)
-        k = n.reshape((N, 1))
-        e = np.exp(-2j * np.pi * k * n / N)
+        k = n.reshape((N, 1)) # 1D array --> 2D column vector(N rows, 1 column).
+        e = np.exp(-1j * 2*np.pi * k * n / N)
         X = np.dot(e, x)
         return X
 
@@ -76,7 +76,7 @@ class DFTAnalyzer:
         
         n = np.arange(N)
         k = n.reshape((N, 1))
-        e = np.exp(2j * np.pi * k * n / N)
+        e = np.exp(1j * 2*np.pi * k * n / N)
         x = np.dot(e, X) / N
         return x
 
@@ -93,9 +93,13 @@ class FastFourierTransform(DFTAnalyzer):
         even = self._fft_radix2(x[0::2])
         odd = self._fft_radix2(x[1::2])
         
-        T = np.array([np.exp(-2j * np.pi * k / N) * odd[k] for k in range(N // 2)])
-        
-        return np.concatenate([even + T, even - T])
+        k = np.arange(N // 2)
+        W = np.exp(-1j * 2 * np.pi * k / N)
+
+        T = W * odd
+        x_k=even+T        #X[k] = G[k] + Wk_N * H[k]
+        x_k_N2=even-T     #X[k + N/2] = G[k] − Wk_N*H[k]
+        return np.concatenate((x_k, x_k_N2))
 
     def compute_dft(self, signal: DiscreteSignal):
         """
