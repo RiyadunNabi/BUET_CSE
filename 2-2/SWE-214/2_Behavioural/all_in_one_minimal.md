@@ -291,8 +291,12 @@ class Checkbox extends Component {
 class TextBox extends Component {
     private boolean enabled = false;
 
-    public void enable()  { enabled = true;  System.out.println("TextBox: ENABLED");  }
-    public void disable() { enabled = false; System.out.println("TextBox: DISABLED"); }
+    public void enable()  { 
+        enabled = true;  System.out.println("TextBox: ENABLED");  
+    }
+    public void disable() { 
+        enabled = false; System.out.println("TextBox: DISABLED"); 
+    }
 }
 
 class Button extends Component {

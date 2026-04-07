@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bilateral Laplace Signal Graph</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    padding: 2rem;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 1.5rem;
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  label { font-size: 14px; color: #666; }
+  input[type=range] {
+    flex: 1;
+    min-width: 160px;
+    accent-color: #378ADD;
+  }
+  #aVal {
+    font-size: 15px;
+    font-weight: 500;
+    min-width: 32px;
+  }
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    font-size: 13px;
+    color: #666;
+  }
+  .legend span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .swatch {
+    display: inline-block;
+    width: 28px;
+    height: 3px;
+  }
+  .swatch.dashed {
+    background: repeating-linear-gradient(90deg, #1D9E75 0 6px, transparent 6px 10px);
+  }
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+    height: 340px;
+  }
+  .roc-box {
+    margin-top: 1.25rem;
+    padding: 0.75rem 1rem;
+    background: #f5f5f3;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+  }
+  .roc-box strong { color: #1a1a1a; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<h2>e<sup>−at</sup>u(t) − e<sup>at</sup>u(−t)</h2>
+<p class="subtitle">Bilateral Laplace signal decomposition — adjust <em>a</em> to control decay rate</p>
+
+<div class="controls">
+  <label>a =</label>
+  <input type="range" min="0.1" max="3" step="0.1" value="1" id="aSlider" />
+  <span id="aVal">1.0</span>
+</div>
+
+<div class="legend">
+  <span><span class="swatch" style="background:#378ADD;"></span> e<sup>−at</sup>u(t)</span>
+  <span><span class="swatch" style="background:#D85A30;"></span> −e<sup>at</sup>u(−t)</span>
+  <span><span class="swatch dashed"></span> sum</span>
+</div>
+
+<div class="chart-wrap">
+  <canvas id="signalChart"></canvas>
+</div>
+
+<div class="roc-box">
+  <strong>Region of convergence:</strong>
+  &nbsp;Re(s) &gt; −a &nbsp;∩&nbsp; Re(s) &lt; a &nbsp;→&nbsp; strip &nbsp;−a &lt; Re(s) &lt; a &nbsp;(requires a &gt; 0)
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const N = 400;
+const tMin = -4, tMax = 4;
+
+function buildDatasets(a) {
+  const t = [], causal = [], anticausal = [], sum = [];
+  for (let i = 0; i <= N; i++) {
+    const ti = tMin + (tMax - tMin) * i / N;
+    t.push(ti);
+    const c = ti >= 0 ? Math.exp(-a * ti) : 0;
+    const ac = ti <= 0 ? -Math.exp(a * ti) : 0;
+    causal.push(c);
+    anticausal.push(ac);
+    sum.push(c + ac);
+  }
+  return { t, causal, anticausal, sum };
+}
+
+let myChart = null;
+
+function makeChart(a) {
+  const { t, causal, anticausal, sum } = buildDatasets(a);
+  const labels = t.map(v => v.toFixed(2));
+
+  const data = {
+    labels,
+    datasets: [
+      { label: 'e^{-at}u(t)', data: causal, borderColor: '#378ADD', borderWidth: 2, pointRadius: 0, tension: 0.3 },
+      { label: '-e^{at}u(-t)', data: anticausal, borderColor: '#D85A30', borderWidth: 2, pointRadius: 0, tension: 0.3 },
+      { label: 'sum', data: sum, borderColor: '#1D9E75', borderWidth: 2, borderDash: [6, 3], pointRadius: 0, tension: 0.3 }
+    ]
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: { duration: 150 },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: items => 't = ' + parseFloat(items[0].label).toFixed(2),
+          label: item => item.dataset.label + ': ' + item.raw.toFixed(3)
+        }
+      }
+    },
+    scales: {
+      x: {
+        type: 'category',
+        ticks: {
+          maxTicksLimit: 9,
+          callback: (val, idx) => {
+            const v = parseFloat(labels[idx]);
+            return Number.isInteger(Math.round(v * 2) / 2) ? v.toFixed(1) : null;
+          },
+          color: '#888780'
+        },
+        grid: { color: 'rgba(136,135,128,0.15)' },
+        title: { display: true, text: 't', color: '#888780', font: { size: 13 } }
+      },
+      y: {
+        min: -1.1, max: 1.1,
+        ticks: { color: '#888780', stepSize: 0.5 },
+        grid: {
+          color: ctx => ctx.tick.value === 0 ? 'rgba(136,135,128,0.5)' : 'rgba(136,135,128,0.15)'
+        }
+      }
+    }
+  };
+
+  if (myChart) {
+    myChart.data = data;
+    myChart.update();
+  } else {
+    myChart = new Chart(document.getElementById('signalChart'), { type: 'line', data, options });
+  }
+}
+
+document.getElementById('aSlider').addEventListener('input', function() {
+  const a = parseFloat(this.value);
+  document.getElementById('aVal').textContent = a.toFixed(1);
+  makeChart(a);
+});
+
+makeChart(1.0);
+</script>
+</body>
+</html>

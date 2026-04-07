@@ -1,0 +1,788 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.8cm]{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[T1]{fontenc}
+\usepackage{fancyvrb}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage{hyperref}
+\usepackage{multicol}
+
+% ---- styling ----
+\definecolor{codebg}{gray}{0.93}
+\definecolor{notebg}{RGB}{255,248,220}
+\definecolor{warnbg}{RGB}{255,235,235}
+
+\newenvironment{codebox}{%
+  \begin{mdframed}[backgroundcolor=codebg, linewidth=0pt,
+    innerleftmargin=6pt, innerrightmargin=6pt,
+    innertopmargin=4pt, innerbottommargin=4pt]%
+  \small\ttfamily
+}{%
+  \end{mdframed}%
+}
+
+\newenvironment{notebox}{%
+  \begin{mdframed}[backgroundcolor=notebg, linewidth=0.6pt,
+    innerleftmargin=6pt, innerrightmargin=6pt,
+    innertopmargin=3pt, innerbottommargin=3pt]%
+  \small
+}{%
+  \end{mdframed}%
+}
+
+\newenvironment{warnbox}{%
+  \begin{mdframed}[backgroundcolor=warnbg, linewidth=0.6pt,
+    innerleftmargin=6pt, innerrightmargin=6pt,
+    innertopmargin=3pt, innerbottommargin=3pt]%
+  \small
+}{%
+  \end{mdframed}%
+}
+
+\newcommand{\cmd}[1]{\texttt{\small #1}}
+\newcommand{\flag}[1]{\texttt{\small #1}}
+
+\setlist[itemize]{noitemsep, topsep=2pt, leftmargin=*}
+\setlist[enumerate]{noitemsep, topsep=2pt, leftmargin=*}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{\textbullet\space}
+\titlespacing{\section}{0pt}{10pt}{4pt}
+\titlespacing{\subsection}{0pt}{6pt}{2pt}
+
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
+
+\begin{document}
+
+% ====================================================================
+% CHEAT SHEET (1 page, tight margins)
+% ====================================================================
+\newgeometry{margin=0.55cm}
+{\small                        % 9pt-ish body text for the cheat sheet
+\setlength{\parskip}{1.5pt}
+\setlength{\parindent}{0pt}
+\titleformat{\section}{\normalfont\bfseries\normalsize}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{4pt}{2pt}
+
+\begin{center}
+  {\large\textbf{Git Cheat Sheet(from slide)}} \\[1pt]
+  {\small From Basics to Branches}
+\end{center}
+
+\vspace{2pt}
+\begin{multicols}{2}
+
+%--- Section 1 ---
+\section*{1. Setup \& Foundations}
+
+\begin{tabular}{@{}p{3.2cm}p{4.5cm}@{}}
+\toprule
+\textbf{Command} & \textbf{What it actually does} \\
+\midrule
+\cmd{git init} & Creates \cmd{.git/} folder; stores entire project history. \\
+\cmd{git status} & Shows branch, staged vs.\ modified files. \\
+\cmd{.gitignore} & Prevents listed files from ever entering staging. \\
+\bottomrule
+\end{tabular}
+
+%--- Section 2 ---
+\section*{2. Staging \& Committing}
+
+\textbf{Old workflow:}
+\vspace{0.2em}
+\begin{codebox}
+    git add . \\ 
+    git commit -m "did stuff" \\
+    git push}
+\end{codebox}
+
+\textbf{Pro workflow:} Stage only files related to one feature, write a meaningful message.
+
+\begin{tabular}{@{}p{3.4cm}p{2.7cm}p{1.2cm}@{}}
+\toprule
+\textbf{Command} & \textbf{Use when\ldots} & \textbf{New?} \\
+\midrule
+\cmd{git add -A} & Stage everything & \checkmark \\
+\cmd{git commit -a} & Skip add for tracked files & $\times$ \\
+\cmd{git commit -am "Msg"} & Skip add + inline msg & $\times$ \\
+\cmd{git commit ----amend} & Fix last msg / forgot file. It will open a text editor and modify commited text in editor & N/A \\
+\cmd{git commit ----amend -m "Edited msg"} & Change only the message & \\
+\bottomrule
+\end{tabular}
+
+%--- Section 3 ---
+\section*{3. Inspecting the Timeline}
+
+\begin{itemize}
+  \item \cmd{git diff} --- exact lines changed since last commit (unstaged).
+  \item \cmd{git diff path/to/file} --- diff for one specific file.
+  \item \cmd{git log} --- lists every commit hash + message (full timeline).
+\end{itemize}
+
+%--- Section 4 ---
+\section*{4. Time Travel}
+
+\begin{itemize}
+  \item \cmd{git checkout path/to/file} --- discard changes; restore from last commit.
+  \item \cmd{git checkout [hash] path/to/file} --- restore file from a specific commit.
+  \item \cmd{git revert [hash]} --- new commit that undoes a past commit (safe).
+\end{itemize}
+
+\columnbreak
+
+%--- Section 5 ---
+\section*{5. Branches: Parallel Universes}
+
+A branch is a pointer to a commit. \cmd{HEAD} points to your current branch.
+
+\begin{tabular}{@{}p{3.8cm}p{3.8cm}@{}}
+\toprule
+\textbf{Command} & \textbf{Action} \\
+\midrule
+\cmd{git branch} & List all branches \\
+\cmd{git branch [name]} & Create a new branch \\
+\cmd{git checkout [name]} & Switch HEAD to that branch \\
+\cmd{git checkout -b [name]} & Create \emph{and} switch (shortcut) \\
+\cmd{git branch -d [name]} & Delete a branch \\
+\bottomrule
+\end{tabular}
+
+\vspace{3pt}
+\textbf{Detached HEAD:} Running \cmd{git checkout [hash]} points HEAD at a commit, not a branch --- you are floating in time!
+
+\textbf{Fix:} \cmd{git checkout -b [new-branch-name]} to anchor it.
+
+%--- Section 6 ---
+\section*{6. Merging}
+
+Git finds the least common ancestor to determine what changed.
+
+\begin{enumerate}[noitemsep, topsep=1pt, leftmargin=*]
+  \item \cmd{git checkout main} --- switch to target branch.
+  \item \cmd{git merge feature-branch} --- pull in the changes.
+  \item \cmd{git status} --- check for conflicts.
+  \item Fix conflicting files, then \cmd{git add path/to/file}.
+  \item \cmd{git commit} --- finalize the merge.
+\end{enumerate}
+
+%--- Section 7 ---
+\section*{7. Remote Repositories (GitHub)}
+
+\begin{itemize}
+  \item \textbf{Git} = local time machine (runs in your terminal).
+  \item \textbf{GitHub} = website for sharing \cmd{.git} repos.
+  \item \cmd{git push origin main} --- upload local timeline so others can collaborate.
+\end{itemize}
+
+\end{multicols}
+}% end \small group
+\restoregeometry
+
+% ====================================================================
+% PRACTICAL WALKTHROUGH (original content from here)
+% ====================================================================
+\newpage
+
+% Restore section/subsection formatting for the walkthrough
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{\textbullet\space}
+\titlespacing{\section}{0pt}{10pt}{4pt}
+\titlespacing{\subsection}{0pt}{6pt}{2pt}
+
+% ---- Title ----
+\begin{center}
+  {\LARGE \textbf{Git \& GitHub: Every Command in a Real Project}}\\[4pt]
+  {\normalsize A practical, narrative walkthrough --- one real folder, one real story}
+\end{center}
+
+\vspace{4pt}
+
+\begin{notebox}
+\textbf{Our project:} \texttt{F:\textbackslash Projects\textbackslash taskmanager} (Windows) ---
+a small web app. We will build this project from zero to production, covering
+\emph{every} command from the cheatsheet in the exact order you would naturally use them.
+\end{notebox}
+
+% ===================================================================
+\section{Day 0 --- Starting Fresh: \texttt{git config} and \texttt{git init}}
+% ===================================================================
+
+You have just installed Git. Before touching any project, tell Git who you are.
+This identity is stamped into every commit you ever make.
+
+\begin{codebox}
+git config ----global user.name "RiyadNabi"\\
+git config ----global user.email "riyadunnabi@gmail.com"\\
+git config ----global core.editor "code --wait"   \textcolor{gray}{\# use VS Code as editor\\}
+\textcolor{gray}{\% git config ----global init.defaultBranch main \# otherwise Git's built-in default is master} \\
+git config ----list   (or git config -l)                               \textcolor{gray}{\# verify everything is set}
+\end{codebox}
+
+My Setup:
+\begin{codebox}
+\tiny{\textit{PS C:\textbackslash Users\textbackslash riyad>} git config -l\\
+diff.astextplain.textconv=astextplain\\
+filter.lfs.clean=git-lfs clean -- \%f\\
+filter.lfs.smudge=git-lfs smudge -- \%f\\
+filter.lfs.process=git-lfs filter-process\\
+filter.lfs.required=true\\
+http.sslbackend=openssl\\
+http.sslcainfo=C:/Program Files/Git/mingw64/etc/ssl/certs/ca-bundle.crt\\
+core.autocrlf=true \quad core.fscache=true \quad core.symlinks=false\\
+pull.rebase=false \quad credential.helper=manager\\
+credential.https://dev.azure.com.usehttppath=true\\
+init.defaultbranch=master\\
+user.name=RiyadunNabi \\ user.email=riyadunnabi@gmail.com}
+\end{codebox}
+
+Now create and initialize the project folder:
+
+\begin{codebox}
+mkdir "F:\textbackslash Projects\textbackslash taskmanager"\\
+% \hfill md    "F:\textbackslash Projects\textbackslash taskmanager"  \# Shortcut \\
+cd    "F:\textbackslash Projects\textbackslash taskmanager"\\
+git init -b main          \textcolor{gray}{\# start repo with 'main' as the default branch }
+% cs\\
+% (or, git init)
+\end{codebox}
+
+Or, more shortcut:
+
+\begin{codebox}
+md    "F:\textbackslash Projects\textbackslash taskmanager" \\
+cd    "F:\textbackslash Projects\textbackslash taskmanager" \textcolor{gray}{\# (cd (Win\&Linux), chdir(identical on Win, different on Linux))} \\
+git init          \textcolor{gray}{\# Uses whatever defaultBranch is set to}
+\end{codebox}
+
+Git creates a hidden \texttt{.git/} folder here. That folder \emph{is} Git's entire database ---
+the full project history, branch pointers, everything. Your working files are untouched.
+
+\begin{notebox}
+\textbf{What just happened:} \cmd{git init} made \texttt{F:\textbackslash Projects\textbackslash taskmanager\textbackslash .git\textbackslash}.
+\cmd{-b main} sets the initial branch name to \texttt{main} instead of the old default \texttt{master}.
+\end{notebox}
+
+% ===================================================================
+\section{Day 0 --- First Files: \texttt{git status}, \texttt{.gitignore}, \texttt{git add}, \texttt{git commit}}
+% ===================================================================
+
+Create some starter files: \texttt{index.html}, \texttt{app.js}, \texttt{.env} (holds secrets),
+and install Node dependencies (\texttt{node\_modules/}).
+
+\begin{codebox}
+git status          \textcolor{gray}{\# check what Git sees right now}\\
+git status -s       \textcolor{gray}{\# compact version: same info, less noise}
+\end{codebox}
+
+Git now shows \texttt{index.html}, \texttt{app.js}, \texttt{.env}, \texttt{node\_modules/} as
+\emph{untracked}. We never want to commit secrets or gigantic dependency folders.
+Create \texttt{.gitignore}:
+
+\begin{codebox}
+\textcolor{gray}{\# .gitignore}\\
+node\_modules/     \textcolor{gray}{\# ignore Node dependencies}\\
+.env              \textcolor{gray}{\# ignore environment/secret files}\\
+*.log             \textcolor{gray}{\# ignore all log files}\\
+build/            \textcolor{gray}{\# ignore build output folder}\\
+!.gitignore       \textcolor{gray}{\# but never ignore .gitignore itself}
+\end{codebox}
+
+Now stage and commit only the safe files:
+
+\begin{codebox}
+git add index.html app.js .gitignore\\
+git status          \textcolor{gray}{\# should show 3 staged (green), .env and node\_modules gone}\\
+git commit -m "Initial commit: add HTML, JS, and gitignore"
+\end{codebox}
+
+\begin{notebox}
+\textbf{Staging area (index):} \cmd{git add} does not commit yet.
+It moves file snapshots into the \emph{staging area}, a waiting room.
+\cmd{git commit} then takes a permanent snapshot of whatever is in that room.
+Think of it as: \emph{pack your suitcase} (add) then \emph{check it in} (commit).
+\end{notebox}
+
+% ===================================================================
+\section{Day 1 --- Reviewing Work: \texttt{git log} and \texttt{git diff}}
+% ===================================================================
+
+Next morning you edit \texttt{app.js} and want to see exactly what changed before staging.
+
+\begin{codebox}
+git diff                    \textcolor{gray}{\# lines changed since last commit (unstaged)}\\
+git diff app.js             \textcolor{gray}{\# same, but only for app.js}\\
+git add app.js\\
+git diff --staged           \textcolor{gray}{\# review what is NOW staged (ready to commit)}
+\end{codebox}
+
+Commit, then look at history:
+
+\begin{codebox}
+git commit -m "Add task creation logic"\\
+git log                         \textcolor{gray}{\# full history with hashes, author, date, message}\\
+git log --oneline               \textcolor{gray}{\# one line per commit --- easier to scan}\\
+git log --graph --oneline --all \textcolor{gray}{\# ASCII branch/merge graph}\\
+git log -p                      \textcolor{gray}{\# show actual diff introduced by each commit}
+\end{codebox}
+
+Each line in \cmd{git log --oneline} looks like: \texttt{a3f19c2 Add task creation logic}.
+The 7-character prefix is the short SHA hash --- the permanent ID of that snapshot.
+
+% ===================================================================
+\section{Day 2 --- Branches: \texttt{git branch}, \texttt{git checkout}, \texttt{git switch}}
+% ===================================================================
+
+\subsection{Creating and switching branches}
+
+You want to add a ``login'' feature without breaking the working \texttt{main} branch.
+
+\begin{codebox}
+git branch                      \textcolor{gray}{\# list all local branches (* = current)}\\
+git branch feature/login        \textcolor{gray}{\# create the branch (HEAD still on main)}\\
+git checkout feature/login      \textcolor{gray}{\# switch HEAD to that branch}\\
+\textcolor{gray}{\# --- OR do both in one command: ---}\\
+git checkout -b feature/login   \textcolor{gray}{\# create AND switch (most common)}\\
+\textcolor{gray}{\# --- Modern equivalent: ---}\\
+git switch -c feature/login     \textcolor{gray}{\# same as checkout -b, newer syntax}
+\end{codebox}
+
+\begin{notebox}
+\textbf{What is HEAD?} HEAD is just a file inside \texttt{.git/} that contains the name of the
+branch you are currently on. \cmd{git checkout feature/login} rewrites that file
+and updates your working directory to match the branch's latest commit.
+\end{notebox}
+
+\subsection{Doing work on the branch}
+\vspace{0.5em}
+\begin{codebox}
+\textcolor{gray}{\# ... edit login.html and auth.js ...}\\
+git add -A                          \textcolor{gray}{\# stage all modified, deleted, and new files}\\
+git commit -m "Add login page and auth module"\\
+\\
+\textcolor{gray}{\# Made a small typo in the message? Fix it before pushing:}\\
+git commit --amend                  \textcolor{gray}{\# opens editor to rewrite last commit message}\\
+\textcolor{gray}{\# Already have the right message, just forgot a file?}\\
+git add forgotten.css\\
+git commit --amend --no-edit        \textcolor{gray}{\# add file to last commit, keep message}
+\end{codebox}
+
+\subsection{Listing and deleting branches}
+\vspace{0.5em}
+\begin{codebox}
+git branch -a           \textcolor{gray}{\# list local AND remote-tracking branches}\\
+git branch -m login     \textcolor{gray}{\# rename current branch to 'login'}\\
+git branch -d old-name  \textcolor{gray}{\# delete a fully merged branch (safe)}
+\end{codebox}
+
+% ===================================================================
+\section{Day 3 --- The Detached HEAD Situation}
+% ===================================================================
+
+Curiosity strikes: you run \cmd{git log --oneline} and see an old commit hash \texttt{b2e7a1c}.
+You do:
+
+\begin{codebox}
+git checkout b2e7a1c    \textcolor{gray}{\# browse old state of the project}
+\end{codebox}
+
+Git prints: \textit{``You are in 'detached HEAD' state.''}
+HEAD now points directly at a commit, not at a branch.
+Any new commits you make here will be \emph{orphaned} --- lost when you switch away.
+
+\begin{warnbox}
+\textbf{Fix immediately:} If you made changes you want to keep, anchor them to a real branch.\\
+\texttt{git checkout -b snapshot-b2e7a1c}\\
+If you just wanted to look and made nothing, simply: \texttt{git checkout main}
+\end{warnbox}
+
+% ===================================================================
+\section{Day 4 --- Merging: \texttt{git merge} and Conflict Resolution}
+% ===================================================================
+
+The login feature is done. Merge it back into \texttt{main}:
+
+\begin{codebox}
+git checkout main                   \textcolor{gray}{\# always switch TO the receiving branch first}\\
+git merge feature/login             \textcolor{gray}{\# pull the feature commits into main}\\
+git merge --no-ff feature/login     \textcolor{gray}{\# force a merge commit even if fast-forward}\\
+git status                          \textcolor{gray}{\# check for conflicts}
+\end{codebox}
+
+\textbf{If there are no conflicts:} Git creates a merge commit automatically. Done.
+
+\textbf{If there are conflicts:} Git pauses and marks the conflicting files:
+
+\begin{codebox}
+\textcolor{gray}{\# Inside app.js you will see:}\\
+<<<<<<< HEAD\\
+const port = 3000;\\
+=======\\
+const port = 8080;\\
+>>>>>>> feature/login
+\end{codebox}
+
+Resolve it manually --- delete the markers, keep the right code ---
+then finalize:
+
+\begin{codebox}
+git add app.js              \textcolor{gray}{\# mark conflict as resolved}\\
+git commit                  \textcolor{gray}{\# Git writes the merge commit message for you}\\
+\textcolor{gray}{\# Changed your mind mid-merge?}\\
+git merge --abort           \textcolor{gray}{\# abandon the merge, return to pre-merge state}
+\end{codebox}
+
+% ===================================================================
+\section{Day 5 --- Comparing Branches: \texttt{git diff branch1..branch2}}
+% ===================================================================
+
+Before merging a second feature, preview what will change:
+
+\begin{codebox}
+git diff main..feature/dashboard    \textcolor{gray}{\# show all differences between two branches}
+\end{codebox}
+
+This is just \cmd{git diff} with two branch names. Extremely useful in code review.
+
+% ===================================================================
+\section{Day 6 --- Remote \& GitHub: \texttt{git remote}, \texttt{git push}, \texttt{git fetch}, \texttt{git pull}}
+% ===================================================================
+
+\subsection{Connecting to GitHub}
+
+Create a blank repo on GitHub (do NOT initialize with a README). Then link it:
+
+\begin{codebox}
+git remote add origin https://github.com/riyad/taskmanager.git\\
+git remote -v           \textcolor{gray}{\# verify: shows fetch and push URLs for 'origin'}
+\end{codebox}
+
+\subsection{Pushing for the first time}
+\vspace{0.5em}
+\begin{codebox}
+git push -u origin main     \textcolor{gray}{\# -u sets 'origin/main' as upstream for future pulls}\\
+git push --tags             \textcolor{gray}{\# push all local tags to remote}
+\end{codebox}
+
+After \cmd{-u}, future pushes on this branch only need \cmd{git push}.
+
+\subsection{Cloning an existing repo}
+
+On a different machine (or a teammate's):
+
+\begin{codebox}
+git clone https://github.com/riyad/taskmanager.git   \textcolor{gray}{\# full clone}\\
+git clone --depth 1 https://github.com/riyad/taskmanager.git  \textcolor{gray}{\# shallow clone}\\
+git clone -b feature/login https://github.com/riyad/taskmanager.git  \textcolor{gray}{\# specific branch}
+\end{codebox}
+
+\cmd{git clone} automatically sets \texttt{origin} to the URL. You get the full history.
+
+\subsection{Fetching vs Pulling}
+
+Your teammate pushed changes. How do you get them?
+
+\begin{codebox}
+git fetch                   \textcolor{gray}{\# download new commits; update origin/* refs; do NOT merge}\\
+git fetch --prune           \textcolor{gray}{\# also remove stale origin/deleted-branch refs}\\
+git log origin/main         \textcolor{gray}{\# inspect what they pushed before touching your work}\\
+git diff main origin/main   \textcolor{gray}{\# compare your main to the remote one}\\
+git pull                    \textcolor{gray}{\# fetch + merge in one step (can create a merge commit)}\\
+git pull --rebase           \textcolor{gray}{\# fetch + rebase: keeps history linear (no merge commit)}
+\end{codebox}
+
+\begin{notebox}
+\textbf{Fetch vs Pull:}
+\cmd{git fetch} is safe --- it only updates the \texttt{origin/*} remote-tracking references.
+\cmd{git pull} immediately applies those changes to your current branch.
+Professional teams often prefer \cmd{fetch + inspect + merge} for more control.
+\end{notebox}
+
+\subsection{Force push (danger zone)}
+\vspace{0.5em}
+\begin{codebox}
+git push --force    \textcolor{gray}{\# overwrite remote history --- use only on personal/feature branches}
+\end{codebox}
+
+\begin{warnbox}
+\textbf{Never force-push to \texttt{main} or \texttt{develop}} on shared repos.
+It rewrites history that teammates have already pulled, causing divergence for everyone.
+\end{warnbox}
+
+\subsection{Managing remotes}
+\vspace{0.5em}
+\begin{codebox}
+git remote remove origin            \textcolor{gray}{\# remove the remote link (does not delete GitHub repo)}\\
+git remote add upstream https://github.com/original/repo.git  \textcolor{gray}{\# common in open-source forks}
+\end{codebox}
+
+% ===================================================================
+\section{Day 7 --- Rebase: \texttt{git rebase} and \texttt{git rebase -i}}
+% ===================================================================
+
+\subsection{Standard rebase (linearize history)}
+
+Your \texttt{feature/dashboard} branch started from an old \texttt{main}.
+You want it to look like it started from the \emph{current} tip of \texttt{main}:
+
+\begin{codebox}
+git checkout feature/dashboard\\
+git rebase main             \textcolor{gray}{\# replay your commits on top of latest main}
+\end{codebox}
+
+Result: no merge commit, clean linear history. Great for pull requests.
+
+\subsection{Interactive rebase (rewrite, squash, reorder)}
+
+You made 5 messy commits while experimenting. Clean them up before merging:
+
+\begin{codebox}
+git rebase -i HEAD~5        \textcolor{gray}{\# open editor showing last 5 commits}
+\end{codebox}
+
+The editor shows: \vspace{0.2em}
+\begin{codebox}
+pick a1b2c3 Add dashboard skeleton\\
+pick d4e5f6 wip\\
+pick 7a8b9c more wip\\
+pick 0d1e2f Fix typo\\
+pick 3a4b5c Final dashboard logic
+\end{codebox}
+
+Change \texttt{pick} to \texttt{squash} (or \texttt{s}) on the wip commits to fold them in.
+Save. Git re-applies and opens a final message editor.
+Result: those 5 commits become 2 clean ones.
+
+% ===================================================================
+\section{Day 8 --- Undoing Things: \texttt{git reset} and \texttt{git revert}}
+% ===================================================================
+
+\subsection{Unstaging a file}
+
+You accidentally staged \texttt{secret.env}:
+
+\begin{codebox}
+git reset secret.env        \textcolor{gray}{\# unstage, keep file on disk (default --mixed mode)}
+\end{codebox}
+
+\subsection{Undoing commits with reset}
+\vspace{0.5em}
+\begin{codebox}
+git reset --soft HEAD~1     \textcolor{gray}{\# undo last commit, keep changes STAGED}\\
+git reset HEAD~1            \textcolor{gray}{\# undo last commit, unstage changes (keep on disk)}\\
+git reset --hard HEAD~1     \textcolor{gray}{\# undo last commit, DISCARD all changes (destructive)}
+\end{codebox}
+
+\begin{warnbox}
+\cmd{--hard} is destructive. Changes are gone from disk. Never use it on pushed commits
+unless you intend to force-push afterward.
+\end{warnbox}
+
+\subsection{Reverting a public commit}
+
+You pushed a bad commit \texttt{c9f3a21} to \texttt{main}. You cannot rewrite history.
+Use revert instead --- it creates a new commit that \emph{undoes} the old one:
+
+\begin{codebox}
+git revert c9f3a21      \textcolor{gray}{\# Git opens editor for the new "revert" commit message}\\
+git push                \textcolor{gray}{\# safe to push: history is only added, never rewritten}
+\end{codebox}
+
+% ===================================================================
+\section{Day 9 --- Saving Work Temporarily: \texttt{git stash}}
+% ===================================================================
+
+\textbf{Scenario:} You are halfway through \texttt{feature/dashboard} when your manager says
+``fix a critical bug on \texttt{main} right now!'' Your changes are not ready to commit.
+
+\begin{codebox}
+git stash               \textcolor{gray}{\# save all staged + unstaged changes to a stash stack}\\
+git stash list          \textcolor{gray}{\# see all stashes: stash@\{0\}, stash@\{1\}, ...}\\
+git checkout main       \textcolor{gray}{\# now safe to switch branches (working tree is clean)}\\
+\textcolor{gray}{\# ... fix the bug on main, commit, push ...}\\
+git checkout feature/dashboard\\
+git stash pop           \textcolor{gray}{\# restore stashed changes and remove them from the stack}\\
+\textcolor{gray}{\# OR to apply but keep in stash:}\\
+git stash apply stash@\{0\}\\
+\textcolor{gray}{\# Remove a specific stash:}\\
+git stash drop          \textcolor{gray}{\# removes top stash (stash@\{0\})}
+\end{codebox}
+
+% ===================================================================
+\section{Day 10 --- Restoring Files: \texttt{git checkout -{}- file}}
+% ===================================================================
+
+You edited \texttt{app.js} but it's a mess and you want to throw away all changes since the last commit:
+
+\begin{codebox}
+git checkout -- app.js      \textcolor{gray}{\# restore app.js from last commit (discard working changes)}
+\end{codebox}
+
+\begin{warnbox}
+There is \textbf{no undo} for this. The working-directory changes are gone.
+\end{warnbox}
+
+% ===================================================================
+\section{Day 11 --- Tagging Releases: \texttt{git tag}}
+% ===================================================================
+
+Version 1.0 is ready. Tag the release commit:
+
+\begin{codebox}
+git tag v1.0                            \textcolor{gray}{\# lightweight tag (just a pointer)}\\
+git tag -a v1.0 -m "First production release"   \textcolor{gray}{\# annotated tag (stores author + date)}\\
+git tag                                 \textcolor{gray}{\# list all tags}\\
+git push --tags                         \textcolor{gray}{\# push all local tags to remote}\\
+git tag -d v1.0                         \textcolor{gray}{\# delete a tag locally}
+\end{codebox}
+
+Tags differ from branches: they never move when new commits are added.
+They are permanent markers for releases.
+
+% ===================================================================
+\section{Unconventional Scenario A --- Moving Uncommitted Work to Another Branch}
+% ===================================================================
+
+You started coding on \texttt{main} by mistake. The changes are not committed yet.
+
+\begin{codebox}
+git stash                   \textcolor{gray}{\# 1. save the accidental work}\\
+git checkout -b dev         \textcolor{gray}{\# 2. create the correct branch}\\
+git stash pop               \textcolor{gray}{\# 3. reapply the changes here}\\
+git add .\\
+git commit -m "Work correctly started on dev"
+\end{codebox}
+
+% ===================================================================
+\section{Unconventional Scenario B --- Removing a Secret File That Was Committed}
+% ===================================================================
+
+You committed \texttt{.env} (with real passwords) and pushed it. Act fast:
+
+\begin{codebox}
+git rm --cached .env                    \textcolor{gray}{\# untrack the file, leave it on disk}\\
+echo ".env" >> .gitignore               \textcolor{gray}{\# make sure it never comes back}\\
+git commit -m "Remove .env from tracking"\\
+git push
+\end{codebox}
+
+\begin{notebox}
+The file is gone from \emph{future} commits, but it is still in old commits in history.
+For a real secret leak, rotate the credentials AND use a tool like
+\texttt{git filter-repo} to scrub history entirely.
+\end{notebox}
+
+% ===================================================================
+\section{Unconventional Scenario C --- Recovering a Lost Commit (\texttt{git reflog})}
+% ===================================================================
+
+You ran \cmd{git reset --hard} and realized you needed that commit.
+Git almost never truly deletes data. The reflog is your safety net:
+
+\begin{codebox}
+git reflog show             \textcolor{gray}{\# every HEAD movement Git has recorded}\\
+\textcolor{gray}{\# Output example:}\\
+\textcolor{gray}{\# a3f19c2 HEAD@\{0\}: reset: moving to HEAD~1}\\
+\textcolor{gray}{\# 9b2c41a HEAD@\{1\}: commit: Add payment module  <-- this is what you lost}\\
+\\
+git checkout -b recover 9b2c41a     \textcolor{gray}{\# restore lost commit on a new branch}
+\end{codebox}
+
+% ===================================================================
+\section{Unconventional Scenario D --- Cherry-Picking One Commit}
+% ===================================================================
+
+The \texttt{feature/payments} branch has one specific hotfix commit (\texttt{ff1a390})
+that \texttt{main} urgently needs, but the full branch is not ready to merge.
+
+\begin{codebox}
+git checkout main\\
+git cherry-pick ff1a390     \textcolor{gray}{\# copy ONLY that commit onto main}
+\end{codebox}
+
+This does not merge the whole branch --- just replays the patch of that one commit.
+
+% ===================================================================
+\section{Unconventional Scenario E --- Finding a Bug with \texttt{git bisect}}
+% ===================================================================
+
+The app worked at tag \texttt{v1.0} but is broken now. Which commit introduced the bug?
+
+\begin{codebox}
+git bisect start\\
+git bisect bad                  \textcolor{gray}{\# current HEAD is broken}\\
+git bisect good v1.0            \textcolor{gray}{\# v1.0 was working}\\
+\textcolor{gray}{\# Git checks out the midpoint commit. Test the app. Then:}\\
+git bisect good                 \textcolor{gray}{\# if the bug is absent at this midpoint}\\
+git bisect bad                  \textcolor{gray}{\# if the bug is present}\\
+\textcolor{gray}{\# Repeat ~log2(N) times. Git will print: "X is the first bad commit"}\\
+git bisect reset                \textcolor{gray}{\# return HEAD to original position}
+\end{codebox}
+
+If your test is scriptable, you can automate the entire bisect:
+
+\begin{codebox}
+git bisect run ./test.sh        \textcolor{gray}{\# script must exit 0 for good, non-zero for bad}
+\end{codebox}
+
+% ===================================================================
+\section{Unconventional Scenario F --- Interactively Staging Hunks: \texttt{git add -p}}
+% ===================================================================
+
+You made two unrelated edits in \texttt{app.js}: a bug fix and a new feature.
+You want two separate commits for clarity.
+
+\begin{codebox}
+git add -p app.js       \textcolor{gray}{\# Git shows each changed "hunk" and asks: stage it? (y/n/s/q)}
+\end{codebox}
+
+Press \texttt{y} to stage a hunk, \texttt{n} to skip, \texttt{s} to split a hunk further.
+Commit the staged portion, then \cmd{git add -p} again for the rest.
+
+% ===================================================================
+\section{Unconventional Scenario G --- \texttt{git diff} Between Branches and Commits}
+% ===================================================================
+
+\begin{codebox}
+git diff main..feature/login            \textcolor{gray}{\# what does the feature add on top of main?}\\
+git diff a3f19c2..9b2c41a              \textcolor{gray}{\# diff between any two commit hashes}\\
+git diff HEAD~3                         \textcolor{gray}{\# compare working tree to 3 commits ago}
+\end{codebox}
+
+% ===================================================================
+\section{Quick Reference: Commands Grouped by Phase}
+% ===================================================================
+
+\begin{tabular}{@{}p{4.5cm}p{10cm}@{}}
+\toprule
+\textbf{Phase} & \textbf{Commands used} \\
+\midrule
+Setup & \cmd{git config --global}, \cmd{git init -b}, \cmd{git clone}, \cmd{git clone --depth 1}, \cmd{git clone -b} \\[2pt]
+Inspect & \cmd{git status}, \cmd{git status -s}, \cmd{git log}, \cmd{git log --oneline}, \cmd{git log --graph --oneline --all}, \cmd{git log -p}, \cmd{git diff}, \cmd{git diff --staged}, \cmd{git diff branch1..branch2} \\[2pt]
+Stage \& Commit & \cmd{git add [file]}, \cmd{git add .}, \cmd{git add -A}, \cmd{git add -p}, \cmd{git commit -m}, \cmd{git commit -a -m}, \cmd{git commit --amend}, \cmd{git commit --amend --no-edit} \\[2pt]
+Branches & \cmd{git branch}, \cmd{git branch -a}, \cmd{git branch [name]}, \cmd{git branch -d}, \cmd{git branch -m}, \cmd{git checkout [branch]}, \cmd{git checkout -b}, \cmd{git checkout --}, \cmd{git switch}, \cmd{git switch -c} \\[2pt]
+Merge \& Rebase & \cmd{git merge}, \cmd{git merge --no-ff}, \cmd{git merge --abort}, \cmd{git rebase}, \cmd{git rebase -i}, \cmd{git cherry-pick} \\[2pt]
+Remote & \cmd{git remote add}, \cmd{git remote -v}, \cmd{git remote remove}, \cmd{git fetch}, \cmd{git fetch --prune}, \cmd{git pull}, \cmd{git pull --rebase}, \cmd{git push}, \cmd{git push -u}, \cmd{git push --force}, \cmd{git push --tags} \\[2pt]
+Undo & \cmd{git reset [file]}, \cmd{git reset --soft HEAD\textasciitilde1}, \cmd{git reset --hard}, \cmd{git revert}, \cmd{git stash}, \cmd{git stash pop}, \cmd{git stash list}, \cmd{git stash apply}, \cmd{git stash drop}, \cmd{git rm --cached}, \cmd{git reflog} \\[2pt]
+Tags & \cmd{git tag}, \cmd{git tag -a}, \cmd{git tag -d}, \cmd{git push --tags} \\[2pt]
+Debug & \cmd{git bisect start/bad/good/reset/run}, \cmd{git add -p} \\[2pt]
+Config & \cmd{git config --global user.name/email/core.editor}, \cmd{git config --list} \\
+\bottomrule
+\end{tabular}
+
+\vspace{6pt}
+\begin{notebox}
+\textbf{Mental model summary:}
+Your project lives in three places simultaneously:
+(1) \textbf{Working directory} --- what you see in your file manager.
+(2) \textbf{Staging area (index)} --- what \cmd{git add} has prepared for the next commit.
+(3) \textbf{Repository (\texttt{.git/})} --- permanent snapshots recorded by \cmd{git commit}.
+Remote is a fourth location (GitHub) synced by \cmd{push/pull/fetch}.
+Every Git command is fundamentally about moving data between these four places.
+\end{notebox}
+
+\end{document}
