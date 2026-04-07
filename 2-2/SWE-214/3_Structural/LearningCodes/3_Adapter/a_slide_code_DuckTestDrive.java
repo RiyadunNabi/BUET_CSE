@@ -44,7 +44,6 @@ class TurkeyAdapter implements Duck {
 
     @Override
     public void quack() {
-        // Translate quack() to gobble()
         turkey.gobble();
     }
 
@@ -76,6 +75,8 @@ public class a_slide_code_DuckTestDrive {
         turkey.fly();
 
         System.out.println("\nThe Duck Adapter says...");
+        // turkeyAdapter.quack();
+        // turkeyAdapter.fly();
         testDuck(turkeyAdapter); // It passes the test!
     }
 

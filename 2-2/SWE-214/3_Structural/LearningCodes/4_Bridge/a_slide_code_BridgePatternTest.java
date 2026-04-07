@@ -59,7 +59,6 @@ class Circle extends Shape {
     @Override
     public void draw() {
         System.out.print("Drawing Circle -> ");
-        // Delegate the coloring work to the implementation object
         color.applyColor();
     }
 }
