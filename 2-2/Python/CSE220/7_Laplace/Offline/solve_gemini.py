@@ -28,6 +28,14 @@ class SmartIrrigation:
         integrand = f * np.exp(-s * self.t)
         integral = np.sum((integrand[:-1] + integrand[1:]) / 2.0) * self.dt
         return integral
+    
+        # total_area = 0
+        # for i in range(len(integrand) - 1):
+        #     left_height = integrand[i]
+        #     right_height = integrand[i+1]
+        #     average_height = (left_height + right_height) / 2.0
+        #     total_area += average_height * dt
+
 
     def inverse_laplace(self, s_list, F_s_values):
         delta_W = s_list[1].imag - s_list[0].imag
@@ -56,7 +64,8 @@ class SmartIrrigation:
             return 0.0
             
         for i, val in enumerate(h):
-            if (h_ss > 0 and val >= target) or (h_ss < 0 and val <= target):
+            # if (h_ss > 0 and val >= target) or (h_ss < 0 and val <= target):
+             if (h_ss > 0 and val >= target):
                 return self.t[i]
         return 0.0
 
