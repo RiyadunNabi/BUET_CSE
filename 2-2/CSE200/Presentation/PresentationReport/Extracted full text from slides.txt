@@ -1,0 +1,3521 @@
+Multi-Objective Evolutionary Algorithms based on Decomposition
+(MOEA/D)
+Md. Rashidul Islam
+2205072
+
+Fathum Mobin
+2205073
+
+Md. Riyadun Nabi
+2205076
+
+23 February 2026
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+1 / 65
+
+TODAY WE WILL TALK ABOUT
+
+MOEA/D
+Multi-Objective Evolutionary Algorithm based on Decomposition
+
+TODAY WE WILL TALK ABOUT
+
+MOEA/D
+Multi-Objective Evolutionary Algorithm based on Decomposition
+
+A powerful evolutionary algorithm for solving
+multi-objective optimization problems.
+
+But before we understand the algorithm. . .
+
+But before we understand the algorithm. . .
+
+we must understand
+what multi-objective
+optimization is.
+
+What Is the Best Machine Learning Model?
+
+Three models trained on the same dataset. Same task. Different trade-offs.
+
+Model A
+
+Model B
+
+Model C
+
+Accuracy: 98%
+Speed: Slow
+
+Accuracy: 90%
+Speed: Very Fast
+
+Accuracy: 95%
+Speed: Medium
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+4 / 65
+
+What Is the Best Machine Learning Model?
+Three models trained on the same dataset. Same task. Different trade-offs.
+
+Model A
+
+Model B
+
+Model C
+
+Accuracy: 98%
+Speed: Slow
+
+Accuracy: 90%
+Speed: Very Fast
+
+Accuracy: 95%
+Speed: Medium
+
+Which model is optimal?
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+4 / 65
+
+Why Does This Matter? Real-World Trade-Offs
+
+Most decisions in the real world force you to balance competing priorities.
+Cost
+
+vs
+
+Quality
+
+Speed
+
+vs
+
+Safety
+
+Risk
+
+vs
+
+Return
+
+Accuracy
+
+vs
+
+Interpretability
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+5 / 65
+
+Why Does This Matter? Real-World Trade-Offs
+
+Most decisions in the real world force you to balance competing priorities.
+Cost
+
+vs
+
+Quality
+
+Speed
+
+vs
+
+Safety
+
+Most real-world problems involve
+conflicting objectives.
+
+Risk
+
+vs
+
+Return
+
+Improving one goal often means
+compromising another.
+
+Accuracy
+
+vs
+
+Interpretability
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+5 / 65
+
+Real-World Example: Buying a Car
+
+“I want a
+car with
+minimum fuel
+consumption”
+
+Person 1
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+6 / 65
+
+Real-World Example: Buying a Car
+
+“I want a
+car with
+minimum fuel
+consumption”
+
+Person 1
+
+Rashidul, Mobin, Riyad
+
+“I want a car
+with maximum
+speed limit”
+
+MOEA/D
+
+Person 2
+
+February 2026
+
+6 / 65
+
+Real-World Example: Buying a Car
+
+“I want a
+car with
+minimum fuel
+consumption”
+
+Person 1
+
+“I want a car
+with maximum
+speed limit”
+
+Person 2
+
+Both objectives matter — but they conflict with each other!
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+6 / 65
+
+A Real-World Example: Buying a Car
+Conflict:
+More speed
+⇒ more fuel
+
+Maximise
+
+Speed
+
+Fuel Use
+Minimise
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+7 / 65
+
+Four Cars on the Shortlist
+They agree on four candidate cars. Can we shrink the list?
+
+Top Speed (km/h)
+
+A
+
+300
+
+Car
+
+Speed
+
+Fuel
+
+A
+
+300 km/h
+
+10 L/100
+
+250
+
+200
+
+150
+
+4
+
+Rashidul, Mobin, Riyad
+
+6
+
+8
+
+10
+
+Fuel Use (L/100 km)
+
+MOEA/D
+
+February 2026
+
+8 / 65
+
+Four Cars on the Shortlist
+They agree on four candidate cars. Can we shrink the list?
+
+Top Speed (km/h)
+
+A
+
+300
+
+250
+
+Car
+
+Speed
+
+Fuel
+
+A
+B
+
+300 km/h
+220 km/h
+
+10 L/100
+6 L/100
+
+B
+
+200
+
+150
+
+4
+
+Rashidul, Mobin, Riyad
+
+6
+
+8
+
+10
+
+Fuel Use (L/100 km)
+
+MOEA/D
+
+February 2026
+
+8 / 65
+
+Four Cars on the Shortlist
+They agree on four candidate cars. Can we shrink the list?
+
+Top Speed (km/h)
+
+A
+
+300
+
+250
+
+B
+
+Car
+
+Speed
+
+Fuel
+
+A
+B
+C
+
+300 km/h
+220 km/h
+150 km/h
+
+10 L/100
+6 L/100
+4 L/100
+
+200
+
+C
+150
+
+4
+
+Rashidul, Mobin, Riyad
+
+6
+
+8
+
+10
+
+Fuel Use (L/100 km)
+
+MOEA/D
+
+February 2026
+
+8 / 65
+
+Four Cars on the Shortlist
+They agree on four candidate cars. Can we shrink the list?
+
+Top Speed (km/h)
+
+A
+
+300
+
+250
+
+B
+D
+
+Car
+
+Speed
+
+Fuel
+
+A
+B
+C
+D
+
+300 km/h
+220 km/h
+150 km/h
+200 km/h
+
+10 L/100
+6 L/100
+4 L/100
+9 L/100
+
+200
+
+C
+150
+
+4
+
+Rashidul, Mobin, Riyad
+
+6
+
+8
+
+10
+
+Fuel Use (L/100 km)
+
+MOEA/D
+
+February 2026
+
+8 / 65
+
+Four Cars on the Shortlist
+They agree on four candidate cars. Can we shrink the list?
+
+Top Speed (km/h)
+
+A
+
+300
+
+250
+
+B
+D
+
+Car
+
+Speed
+
+Fuel
+
+A
+B
+C
+D
+
+300 km/h
+220 km/h
+150 km/h
+200 km/h
+
+10 L/100
+6 L/100
+4 L/100
+9 L/100
+
+200
+
+Goal: Maximise speed,
+Minimise fuel use.
+
+C
+150
+
+Can we remove any car?
+4
+
+Rashidul, Mobin, Riyad
+
+6
+
+8
+
+10
+
+Fuel Use (L/100 km)
+
+MOEA/D
+
+February 2026
+
+8 / 65
+
+Dominance & Non-Domination
+
+The Key Concept: Dominance
+
+A solution x1 dominates another solution x2 (written x1 ≺ x2 )
+if and only if both of the following conditions are met:
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+10 / 65
+
+The Key Concept: Dominance
+
+A solution x1 dominates another solution x2 (written x1 ≺ x2 )
+if and only if both of the following conditions are met:
+
+Condition 1 — No Worse in All Objectives:
+x1 is no worse than x2 in every objective.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+10 / 65
+
+The Key Concept: Dominance
+
+A solution x1 dominates another solution x2 (written x1 ≺ x2 )
+if and only if both of the following conditions are met:
+
+Condition 1 — No Worse in All Objectives:
+x1 is no worse than x2 in every objective.
+
+Condition 2 — Strictly Better in at Least One:
+There exists at least one objective where x1 is strictly better than x2 .
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+10 / 65
+
+Visualising Dominance: All Four Cars
+Our four candidates:
+Top Speed (km/h)
+A
+300
+
+250
+
+Car
+
+Speed
+
+Fuel
+
+A
+B
+C
+D
+
+300 km/h
+220 km/h
+150 km/h
+200 km/h
+
+10 L
+6L
+4L
+9L
+
+B
+D
+
+200
+
+C
+150
+
+4
+
+Rashidul, Mobin, Riyad
+
+6
+
+8
+
+10
+
+Fuel Use (L/100 km)
+
+MOEA/D
+
+February 2026
+
+11 / 65
+
+Visualising Dominance: All Four Cars
+Our four candidates:
+Top Speed (km/h)
+A
+300
+
+250
+
+B
+
+Car
+
+Speed
+
+Fuel
+
+A
+B
+C
+D
+
+300 km/h
+220 km/h
+150 km/h
+200 km/h
+
+10 L
+6L
+4L
+9L
+
+B’s zone = all solutions
+B beats on both axes.
+
+D
+200
+
+150
+
+C dominance
+B’s
+zone
+
+4
+
+Rashidul, Mobin, Riyad
+
+6
+
+8
+
+10
+
+Fuel Use (L/100 km)
+
+MOEA/D
+
+February 2026
+
+11 / 65
+
+Visualising Dominance: All Four Cars
+Our four candidates:
+Top Speed (km/h)
+A
+300
+
+250
+
+B dB
+omin
+a
+
+Car
+
+Speed
+
+Fuel
+
+A
+B
+C
+D
+
+300 km/h
+220 km/h
+150 km/h
+200 km/h
+
+10 L
+6L
+4L
+9L
+
+B’s zone = all solutions
+B beats on both axes.
+
+tes D D
+
+200
+
+150
+
+D falls inside B’s zone
+⇒ D is dominated by B.
+
+C dominance
+B’s
+zone
+
+4
+
+Rashidul, Mobin, Riyad
+
+6
+
+8
+
+10
+
+Fuel Use (L/100 km)
+
+MOEA/D
+
+February 2026
+
+11 / 65
+
+Visualising Dominance: All Four Cars
+Our four candidates:
+Top Speed (km/h)
+A
+300
+
+250
+
+B dB
+omin
+a
+
+Car
+
+Speed
+
+Fuel
+
+A
+B
+C
+D
+
+300 km/h
+220 km/h
+150 km/h
+200 km/h
+
+10 L
+6L
+4L
+9L
+
+B’s zone = all solutions
+B beats on both axes.
+
+tes D D
+
+200
+
+150
+
+C dominance
+B’s
+zone
+
+4
+
+Rashidul, Mobin, Riyad
+
+D falls inside B’s zone
+⇒ D is dominated by B.
+
+Removed!
+
+6
+
+8
+
+10
+
+A, B, C are all outside
+Fuel Use (L/100 km)
+each other’s zones.
+None dominates the others!
+MOEA/D
+
+February 2026
+
+11 / 65
+
+The Remaining Cars Form the Pareto Front
+
+Can A, B, or C dominate each other?
+Pair
+
+Speed
+
+Fuel
+
+Result
+
+A vs B
+A vs C
+B vs C
+
+A✓
+A✓
+B✓
+
+B✓
+C✓
+C✓
+
+No dominance
+No dominance
+No dominance
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+12 / 65
+
+The Remaining Cars Form the Pareto Front
+
+Top Speed (km/h)
+Can A, B, or C dominate each other?
+
+A
+
+300
+nt
+
+Pair
+
+Speed
+
+Fuel
+
+Result
+
+250
+
+A vs B
+A vs C
+B vs C
+
+A✓
+A✓
+B✓
+
+B✓
+C✓
+C✓
+
+No dominance
+No dominance
+No dominance
+
+200
+
+to
+
+o
+Fr
+
+re
+Pa
+
+D (removed)
+B
+
+C
+150
+
+Each car excels at something
+the others don’t.
+All three are non-dominated!
+
+4
+
+6
+
+8
+
+10
+
+Fuel Use (L/100 km)
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+12 / 65
+
+The Goal of Multi-Objective Optimization
+
+The Fundamental Goal
+Multi-objective optimization aims to find (or approximate) the entire non-dominated set
+— giving the decision-maker the full picture of trade-offs.
+
+Multiple
+Conflicting Objectives
+
+Rashidul, Mobin, Riyad
+
+defines
+
+Dominance
+Concept
+
+MOEA/D
+
+identifies
+
+Non-Dominated
+Set (Pareto Front)
+
+February 2026
+
+13 / 65
+
+What if there are millions of solutions?
+The Challenge
+Imagine you have millions of possible solutions to a problem. You cannot try them all. How
+do you find a good one fast?
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+14 / 65
+
+What if there are millions of solutions?
+The Challenge
+Imagine you have millions of possible solutions to a problem. You cannot try them all. How
+do you find a good one fast?
+A bad strategy: Random Search
+quality
+mostly poor solutions
+
+solutions
+
+Picking random solutions wastes most attempts
+on bad regions.
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+14 / 65
+
+What if there are millions of solutions?
+The Challenge
+Imagine you have millions of possible solutions to a problem. You cannot try them all. How
+do you find a good one fast?
+A bad strategy: Random Search
+
+A smarter strategy: Learn & Improve
+
+quality
+
+quality
+mostly poor solutions
+improving!
+
+solutions
+
+Picking random solutions wastes most attempts
+on bad regions.
+Rashidul, Mobin, Riyad
+
+solutions
+
+Use what you’ve learned so far to guide the next
+attempt.
+MOEA/D
+
+February 2026
+
+14 / 65
+
+What if there are millions of solutions?
+The Challenge
+Imagine you have millions of possible solutions to a problem. You cannot try them all. How
+do you find a good one fast?
+A bad strategy: Random Search
+
+A smarter strategy: Learn & Improve
+
+quality
+
+quality
+mostly poor solutions
+improving!
+
+solutions
+
+Picking random solutions wastes most attempts
+on bad regions.
+
+solutions
+
+Use what you’ve learned so far to guide the next
+attempt.
+
+Evolutionary Algorithms do exactly this — guided, improving search.
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+14 / 65
+
+Three Steps — The Evolutionary Cycle
+
+Step 1 — Selection
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+15 / 65
+
+Three Steps — The Evolutionary Cycle
+
+Step 1 — Selection
+
+Step 2 — Variation
+(Crossover + Mutation)
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+15 / 65
+
+Three Steps — The Evolutionary Cycle
+
+Step 1 — Selection
+
+Step 2 — Variation
+(Crossover + Mutation)
+
+Step 3 — Replacement
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+15 / 65
+
+Three Steps — The Evolutionary Cycle
+
+Step 1 — Selection
+
+Step 2 — Variation
+(Crossover + Mutation)
+
+repeat
+
+Step 3 — Replacement
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+15 / 65
+
+Step 1 in Detail: Selection
+
+What is Selection?
+We look at every solution in the population
+and give better-scoring solutions a higher
+chance of being chosen as parents. Worse
+solutions can still be chosen — just less often.
+
+Score: 92
+Score: 75
+
+Selected
+Parents
+
+Score: 55
+
+Why not always pick the single best?
+Because the best-so-far might not lead to the globally best solution. Keeping some variety avoids getting
+stuck in a local “good-enough” trap.
+
+Rashidul, Mobin, Riyad
+
+Our Population
+
+Score: 30
+Bigger = better score
+
+MOEA/D
+
+February 2026
+
+16 / 65
+
+Step 2a: Crossover — Mixing Parents
+What is Crossover?
+Take two parent solutions and combine parts of each to create a child solution. The child
+gets some traits from Parent A and some from Parent B.
+Parent A
+
+Parent B
+
+Engine: 2.0L
+Weight: 1100kg
+Tyres: 205mm
+
+Engine: 3.5L
+Weight: 1500kg
+Tyres: 225mm
+
+some traits
+
+some traits
+
+Engine: 2.0L
+Weight: 1500kg
+Tyres: 205mm
+Child (crossover)
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+17 / 65
+
+Step 2b: Mutation — Adding a Little Randomness
+What is Mutation?
+After crossover, we randomly change one or a
+few values in the child solution by a small
+amount.
+Why do we need this?
+Crossover can only combine traits that already exist in the
+population. Mutation introduces brand new values — so
+the algorithm can explore regions it has never visited.
+
+Child after crossover
+Engine: 2.0L
+Weight: 1500kg
+Tyres: 205mm
+Mutation!
+tweak one value
+
+Engine: 2.0L
+Weight: 1500kg
+Tyres: 215mm
+After mutation
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+18 / 65
+
+Let’s Watch It Happen: A Visual Simulation
+
+Generation 0 — random start
+Speed (more is better ↑)
+
+All solutions are poor — scattered with high fuel use, low speed
+
+Generation 0
+
+ideal region
+
+We start randomly. Most
+solutions are bad — high fuel
+use and low speed. But we have
+a wide spread to work with.
+The gray dots are our initial
+population, scattered with no
+structure.
+Fuel Use (less is better ←)
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+19 / 65
+
+Let’s Watch It Happen: A Visual Simulation
+
+Speed (more is better ↑)
+
+Generation 1 — first improvement
+ideal region
+
+Generation 1
+Selection chose the
+slightly-better parents.
+Crossover mixed them. The
+whole cloud has shifted toward
+lower fuel use and higher speed.
+Fuel Use (less is better ←)
+
+Selection + crossover pulled the cloud toward better regions
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+19 / 65
+
+Let’s Watch It Happen: A Visual Simulation
+
+Speed (more is better ↑)
+
+Generation 2 — converging fast
+ideal region
+
+Generation 2
+The population has gathered
+near the frontier. A Pareto
+front is beginning to take shape
+— diverse trade-off solutions are
+appearing.
+
+fro
+
+nt
+
+em
+
+er
+
+gi
+
+ng
+
+Fuel Use (less is better ←)
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+19 / 65
+
+Let’s Watch It Happen: A Visual Simulation
+
+Converged — Pareto Front Discovered!
+Speed (more is better ↑)
+
+Done!
+After many generations we have
+a full spread of
+non-dominated solutions —
+the Pareto Front. Each red dot
+is a valid, excellent trade-off.
+
+ideal region
+
+Pa
+re
+t
+
+o
+
+Fr
+on
+t
+
+No single “winner” — the
+decision-maker chooses which
+trade-off fits their needs.
+
+Fuel Use (less is better ←)
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+19 / 65
+
+Why Is This Perfect for Multi-Objective Problems?
+Recall: In a multi-objective problem there is no single “best” — there is a set of best
+trade-offs (the Pareto Front).
+Classical optimisers find one solution
+
+EAs naturally find many solutions
+f2
+
+f2
+
+Pa
+ret
+
+only this one
+
+o
+
+rest ignored
+
+Rashidul, Mobin, Riyad
+
+nt
+
+f1
+
+f1
+
+They require you to decide on a weighting up
+front. If priorities change, you must re-run from
+scratch.
+
+Fr
+o
+
+The population maps naturally to a set of
+trade-off solutions. One run gives the full picture.
+MOEA/D
+
+February 2026
+
+20 / 65
+
+MOEA/D: The Idea of Decomposition
+
+We saw: Evolutionary Algorithms approximate the Pareto front
+
+In MOEA/D, we do not search the entire front globally
+
+We decompose one multi-objective
+problem into many simple subproblems
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+21 / 65
+
+The Idea of Decomposition
+
+Here comes the idea of Decomposition
+
+Let us go through a story from a university
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+22 / 65
+
+It’s That Time of Year...
+
+University Scholarship Selection Season
+
+You are on the Selection Committee
+Your task: choose the most deserving candidates.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+23 / 65
+
+The Stack on Your Desk
+
+2,000
+application files
+
+Two thousand students
+each hoping for a scholarship.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+24 / 65
+
+You Open the First Few Files...
+
+Alice
+
+Bob
+
+CGPA: 3.98
+Research: avg
+Leadership: avg
+Financial need: low
+
+CGPA: 3.40
+Research: 4 papers
+Leadership: avg
+Financial need: low
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+Carol
+CGPA: 3.50
+Research: avg
+Leadership:
+excellent
+Financial need: avg
+
+February 2026
+
+25 / 65
+
+...And More Files
+
+Dave
+CGPA: 3.10
+Research: low
+Leadership: avg
+Financial need:
+very high
+
+Rashidul, Mobin, Riyad
+
+Eva
+CGPA: 3.70
+Research: 3 papers
+Leadership: good
+Financial need: avg
+
+MOEA/D
+
+· · · and 1,995 more
+just like these.
+
+February 2026
+
+26 / 65
+
+The Obvious Question
+
+“JUST RANK THEM!!!”
+Assign a score to each applicant.
+Sort from best to worst. Pick the top ones.
+
+Sounds simple, right?
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+27 / 65
+
+But Wait — What’s the Score?
+
+To give a single score, you need
+to combine all four criteria.
+score = w1 · CGPA + w2 ·
+Research + w3 · Leadership + w4 · Need
+What should w1 , w2 , w3 , w4 be?
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+28 / 65
+
+Nobody Agrees on the Weights
+
+Prof. A:
+“CGPA is
+everything!”
+
+Prof. B:
+“Research
+matters most.”
+
+Every committee member has
+a different notion of “best”.
+Prof. C:
+“We need
+leaders!”
+
+Rashidul, Mobin, Riyad
+
+Prof. D:
+“Financial need
+is priority.”
+
+MOEA/D
+
+February 2026
+
+29 / 65
+
+Okay, Let’s Try. Who’s Better: Alice or Bob?
+
+Alice
+
+Bob
+
+CGPA: 3.98
+Research: 0 papers
+Leadership: Avg
+Need: Low
+
+vs
+
+CGPA: 3.40
+Research: 4 papers
+Leadership: Avg
+Need: Low
+
+Alice wins on CGPA.
+Bob wins on Research.
+Nobody dominates the other.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+30 / 65
+
+Now Do That for 2,000 Applicants
+
+≈ 2,000,000
+comparisons!
+
+Every applicant must be compared with every other applicants.
+Computationally expensive and conceptually messy.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+31 / 65
+
+And Even If You Do It...
+
+Final Top 10 Selected:
+#1 Alice
+
+#2 James
+
+#3 Priya
+
+#4 Lena
+
+#5 Omar
+
+CGPA: 3.98
+
+CGPA: 3.97
+
+CGPA: 3.96
+
+CGPA: 3.95
+
+CGPA: 3.94
+
+#6 Sara
+
+#7 Chen
+
+#8 Fatima
+
+#9 Ravi
+
+#10 Nina
+
+CGPA: 3.93
+
+CGPA: 3.92
+
+CGPA: 3.91
+
+CGPA: 3.90
+
+CGPA: 3.89
+
+Problem: Every selected candidate
+has a high CGPA — and nothing else.
+Bob (4 papers), Carol (leadership),
+Dave (financial need) — all rejected.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+32 / 65
+
+The Real Issue
+
+There is no single “Best” applicant.
+There are only applicants who
+are best in a certain way.
+Alice is best if you care about CGPA.
+Bob is best if you care about Research.
+Dave is best if you care about Financial need.
+
+Forcing a single global ranking destroys this structure.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+33 / 65
+
+A Better Idea Starts to Form...
+What if we stopped trying to build one global ranking...
+One hard global ranking
+(expensive, unfair, not diverse)
+
+Several focused sub-selections
+(one per preference type)
+Each sub-problem is simple. Together, they cover everything.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+34 / 65
+
+Two Questions That Change Everything
+
+What if we stop building one global ranking?
+
+What if we evaluate under different preferences instead?
+
+These two questions lead us directly
+to the core idea behind MOEA/D.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+35 / 65
+
+And Together, They Cover Everything
+
+Bob — Research
+
+Carol — Leadership
+
+4 publications
+
+Club president, 3 NGOs
+
+Dave — Need-Based
+
+Eva — Balanced
+
+Family income: very low
+
+Good across all criteria
+
+Diverse. Fair. No single winner dominates.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+36 / 65
+
+The Key Insight
+
+One global ranking
+
+×
+
+Multiple preference-based rankings
+
+✓
+
+Each sub-ranking is simple to compute.
+Together, they are complete —
+covering all preference directions.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+37 / 65
+
+This Is Called: Decomposition
+
+Instead of one hard problem,
+solve many simple ones.
+−→
+
+Decomposition
+
+←−
+
+Breaking a multiobjective optimization problem
+into multiple scalar subproblems, each with a different preference.
+One multiobjective problem
+
+Rashidul, Mobin, Riyad
+
+⇒
+
+MOEA/D
+
+many scalar subproblems
+
+February 2026
+
+38 / 65
+
+Visualizing Decomposition
+
+One Hard
+Multiobjective Problem
+Decompose
+
+g1
+
+g2
+
+g3
+
+g4
+
+g5
+
+Research
+focused
+
+Leadership
+focused
+
+Balanced
+
+Need focused
+
+Academic
+focused
+
+Each gi is a scalar optimization problem — easy to solve individually.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+39 / 65
+
+A Second Story: Buying a Phone
+
+You want to buy a new smartphone.
+
+You care about two things:
+1. Price — as low as possible
+
+Rashidul, Mobin, Riyad
+
+2. Camera Quality — as high as possible.
+
+MOEA/D
+
+February 2026
+
+40 / 65
+
+You Walk Into the Store...
+
+Phone A
+
+Phone B
+
+Phone C
+
+Phone D
+
+$200
+
+$450
+
+$1,100
+
+$500
+
+Camera:
+
+Camera:
+
+Camera:
+
+Camera:
+
+2/5
+
+4/5
+
+5/5
+
+2/5
+
+Budget pick
+
+Mid-range
+
+Flagship
+
+Overpriced?
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+41 / 65
+
+Which One Is “Best”?
+
+It depends entirely on your preference.
+
+On a tight budget?
+Phone A wins
+
+Want the best camera?
+Phone C wins
+Want a balance?
+Phone B wins
+
+And what about phone D? Phone D is dominated — nobody would choose it.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+42 / 65
+
+Phone D Is Dominated
+
+Phone A
+
+Phone B
+
+$200
+cam 2/5
+
+$450
+cam 4/5
+
+Better camera
+Lower price
+
+Phone D
+$500
+cam 2/5
+
+Phone D is dominated. Phone B is better in both criteria.
+Dominated options can be safely ignored.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+43 / 65
+
+The Phones That Remain: Non-Dominated
+
+Phone A
+
+Neither dominates
+
+Neither dominates
+Phone B
+
+Phone C
+
+$200
+cam 2/5
+
+$450
+cam 4/5
+
+$1,100
+cam 5/5
+
+Best price
+
+Balanced
+
+Best camera
+
+These three phones are non-dominated — the best trade-offs available.
+Together they form the PARETO FRONT.
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+44 / 65
+
+Back to the Phone Store: Each Preference = One Subproblem
+
+Phone A
+
+Phone B
+
+Phone C
+
+Price: $200
+Camera: 2/5
+
+Price: $450
+Camera: 4/5
+
+Price: $1,100
+Camera: 5/5
+
+Best price
+
+Balanced choice
+
+Best camera
+
+Budget focus
+g1 : minimize price
+
+Balanced preference
+g3 : equal weight
+
+Camera focus
+g5 : maximize quality
+
+Different preferences lead to different phones — and different scalar subproblems
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+45 / 65
+
+Introducing the Weight Vector λ
+
+A weight vector λ = (λ1 , λ2 )
+encodes a preference over objectives
+λ1 + λ 2 = 1
+
+(like percentages)
+
+λ = (0.1, 0.9)
+
+λ = (0.5, 0.5)
+
+λ = (0.9, 0.1)
+
+Price-focused
+”90% Camera,
+10% Price”
+
+Perfectly Balanced
+”50% Camera,
+50% Price”
+
+Camera-focused
+”10% Camera,
+90% Price”
+
+finds Phone C
+
+finds Phone B
+
+finds Phone A
+
+Each λ defines one scalar subproblem
+and one focused search direction
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+46 / 65
+
+Two Classic Ways to Scalarize
+
+Weighted Sum
+
+Tchebycheff
+
+Combine objectives as
+a weighted average
+
+Minimize the worst gap
+to the ideal point
+
+or
+
+Focus on the weakest objective
+
+Score = λ1 f1 + λ2 f2
+
+Works for non-convex fronts
+
+Simple • Fast • Convex fronts
+
+More robust
+
+In both cases, λ converts many objectives into one scalar score
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+47 / 65
+
+λ as a Direction: Geometric Intuition
+
+f2 (camera)
+
+Pareto front
+λ
+
+Each λ defines a search direction.
+
+optimal
+
+f1 (price)
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+The best solution
+along that direction
+lies on the Pareto front.
+
+February 2026
+
+48 / 65
+
+Many λ Directions → Many Pareto Points
+f2 (camera)
+
+λ1
+λ2
+
+Each λi defines one subproblem
+
+λ3
+
+λ1 = (0.1, 0.9) camera-focused
+λ3 = (0.5, 0.5) balanced
+λ5 = (0.9, 0.1) price-focused
+
+λ4
+λ5
+
+f1 (price)
+
+Many directions → many solutions covering the Pareto front
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+49 / 65
+
+Each λ “Owns” One Region of the Pareto Front
+f2
+
+R1
+
+Each λi owns one region
+
+R2
+
+Each subproblem searches
+only inside its region
+and finds its best Pareto solution
+
+R3
+R4
+R5
+f1
+
+All regions together ⇒
+full Pareto front coverage
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+50 / 65
+
+Few Weight Vectors → Sparse Coverage
+
+f2
+
+?
+
+True PF
+
+Too Few Weight Vectors
+⇒ only 3 Pareto solutions
+
+?
+
+⇒ large gaps in the front
+Many trade-offs are missed
+f1
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+51 / 65
+
+Many Weight Vectors → Uniform Coverage
+
+f2
+
+True PF
+
+Many Weight Vectors
+⇒ many Pareto solutions
+⇒ uniform coverage
+All trade-off regions represented
+f1
+
+Dense λ ⇒ high diversity
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+52 / 65
+
+Why Is Decomposition So Powerful? #1: Local Focus
+
+Without Decomposition
+
+With Decomposition
+
+Every solution competes
+against all others.
+
+Each subproblem has
+one clear direction.
+
+Hard to make progress —
+too many directions
+pulling at once.
+
+vs.
+
+Like trying to be the best
+at everything simultaneously.
+
+Search concentrates
+on improving along
+that direction.
+Like being the best
+budget phone. Focused.
+
+Local focus ⇒ each subproblem becomes easier to optimize
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+53 / 65
+
+Why Is Decomposition So Powerful? #2: Natural Diversity
+• Solutions found
+Pareto front
+f2
+Pareto front
+
+Natural Diversity
+Different subproblems
+search in different directions.
+Solutions spread across
+the entire Pareto front.
+f1
+
+No extra mechanism needed
+Diversity is built
+into decomposition
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+54 / 65
+
+Why Is Decomposition So Powerful? #3: No Global Ranking Needed
+
+Global Ranking
+
+Decomposition
+
+Requires comparing every
+solution to every other.
+
+Each subproblem has a
+scalar objective g .
+
+Who is “better” when
+one excels at f1
+and another at f2 ?
+
+vs.
+
+Expensive. Ambiguous.
+
+Just minimize g .
+No cross-comparisons
+between subproblems.
+Simple. Scalable.
+
+Each subproblem becomes a simple optimization task
+— no dominance sorting required
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+55 / 65
+
+All of this — directions, subproblems, scalarization, coverage — leads to one conclusion:
+
+Decomposition
+is the foundation of
+MOEA/D
+
+Every design decision in MOEA/D follows from this one idea
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+56 / 65
+
+So Far: Subproblems. Next: Making Them Cooperate.
+
+Subproblems
+g1 , g2 , . . . , gN
+Each has a direction λi
+
++
+
+Cooperation
+Neighboring subproblems
+share information
+
+MOEA/D
+Up next: How do subproblems cooperate?
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+57 / 65
+
+MOEA/D Philosophy
+
+Two Key Ideas:
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+58 / 65
+
+MOEA/D Philosophy
+
+Two Key Ideas:
+1
+
+Decomposition: Break into simple problems
+Hard
+
+Rashidul, Mobin, Riyad
+
+Easy Easy Easy
+
+MOEA/D
+
+February 2026
+
+58 / 65
+
+MOEA/D Philosophy
+
+Two Key Ideas:
+1
+
+Decomposition: Break into simple problems
+Hard
+
+2
+
+Easy Easy Easy
+
+Collaboration: Let similar problems help each other
+g1
+
+g2
+
+g3
+
+g4
+
+Share information!
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+58 / 65
+
+Understanding MOEA/D: The 5 Friends Story
+The 5 Friends - Each with Different Car Preferences
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+59 / 65
+
+Understanding MOEA/D: The 5 Friends Story
+The 5 Friends - Each with Different Car Preferences
+Friend 1
+
+Quality first (90% Quality-10% Price)
+
+Friend 2
+
+Good quality (70% Quality-30% Price)
+
+Friend 3
+
+Balanced (50% Quality-50% Price)
+
+Friend 4
+
+Cheaper car (30% Quality-70% Price)
+
+Friend 5
+
+Cheapest! (10% Quality-90% Price)
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+59 / 65
+
+Understanding MOEA/D: The 5 Friends Story
+The 5 Friends - Each with Different Car Preferences
+Friend 1
+
+Quality first (90% Quality-10% Price)
+
+INITIALIZATION:
+
+Friend 2
+
+Good quality (70% Quality-30% Price)
+
+Quality (maximize)
+
+Friend 3
+
+Balanced (50% Quality-50% Price)
+
+Friend 4
+
+Cheaper car (30% Quality-70% Price)
+
+Friend 5
+
+Cheapest! (10% Quality-90% Price)
+
+Pareto front
+λ1 (90-10)
+λ2 (70-30)
+
+Each friend = one subproblem
+
+λ3 (50-50)
+
+λ4 (30-70)
+
+⇒ with a different weight vector λ
+
+λ5 (10-90)
+
+Price (minimize)
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+59 / 65
+
+Step 1: Random Initial Solution
+Each friend randomly picks one car from the design space
+
+F1
+
+Rashidul, Mobin, Riyad
+
+F2
+
+F3
+
+MOEA/D
+
+F4
+
+F5
+
+February 2026
+
+60 / 65
+
+Step 1: Random Initial Solution
+Each friend randomly picks one car from the design space
+
+F1
+
+F2
+
+F3
+
+F4
+
+F5
+
+Car A
+Q=60
+P=$40k
+
+Car X
+Q=90
+P=$35k
+
+Car C
+Q=75
+P=$20k
+
+Car Y
+Q=55
+P=$10k
+
+Car B
+Q=50
+P=$8k
+
+This creates the initial population of solutions
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+60 / 65
+
+STEP 2: Crossover+Mutation — Combining Ideas From Neighbors
+Friend 3 takes parts from both neighbors’ cars to build a new one
+Parent 1 (F2’s neighbor)
+
+F2’s Car X
+Engine: V8
+Seats: Leather
+Brand: Premium
+Price: $35k
+
+F4’s Car Y
+Engine: V4
+Seats: Fabric
+Brand: Budget
+Price: $10k
+Parent 2 (F4’s neighbor)
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+61 / 65
+
+STEP 2: Crossover+Mutation — Combining Ideas From Neighbors
+Friend 3 takes parts from both neighbors’ cars to build a new one
+split point
+Parent 1 (F2’s neighbor)
+
+F2’s Car X
+Engine: V8
+Seats: Leather
+Brand: Premium
+Price: $35k
+
+New Car D
+
+×
+F4’s Car Y
+Engine: V4
+Seats: Fabric
+Brand: Budget
+Price: $10k
+
+Crossover
+
+Engine: V8
+Seats: Fabric
+Brand: Premium
+Price: $20.5k
+
+Parent 2 (F4’s neighbor)
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+61 / 65
+
+STEP 2: Crossover+Mutation — Combining Ideas From Neighbors
+Friend 3 takes parts from both neighbors’ cars to build a new one
+split point
+
+small random
+nudge added
+
+Parent 1 (F2’s neighbor)
+
+F2’s Car X
+Engine: V8
+Seats: Leather
+Brand: Premium
+Price: $35k
+
+×
+F4’s Car Y
+Engine: V4
+Seats: Fabric
+Brand: Budget
+Price: $10k
+
+Final Car D
+
+New Car D
+
+Crossover
+
+Engine: V8
+Seats: Fabric
+Brand: Premium
+Price: $20.5k
+
+∼
+Mutation
+
+Engine: V8
+Seats: Fabric
+Brand: Premium
+Price: $20k
+slightly tweaked!
+
+Offspring (F3’s new car)
+
+Parent 2 (F4’s neighbor)
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+61 / 65
+
+Step 3: Does Car D Actually Help the Neighbors?
+Friend 3 shares Car D — each neighbor checks if it beats their current car
+Car D
+Q=80, $20k
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+62 / 65
+
+Step 3: Does Car D Actually Help the Neighbors?
+Friend 3 shares Car D — each neighbor checks if it beats their current car
+Car D
+Q=80, $20k
+
+70% Quality
+
+50%–50%
+
+70% Price
+
+F2
+
+F3
+
+F4
+
+Car X
+Q=90, $35k
+
+Car C
+Q=75, $20k
+
+Car Y
+Q=55, $10k
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+Car D replaces
+only if it scores
+better by
+that friend’s
+own weights
+
+February 2026
+
+62 / 65
+
+Step 3: Does Car D Actually Help the Neighbors?
+Friend 3 shares Car D — each neighbor checks if it beats their current car
+Car D
+Q=80, $20k
+Comparing...
+70% Quality
+
+50%–50%
+
+70% Price
+
+F2
+
+F3
+
+F4
+
+Car X
+Q=90, $35k
+
+Car C
+Q=75, $20k
+
+Car Y
+Q=55, $10k
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+Car D replaces
+only if it scores
+better by
+that friend’s
+own weights
+
+February 2026
+
+62 / 65
+
+Step 3: Does Car D Actually Help the Neighbors?
+Friend 3 shares Car D — each neighbor checks if it beats their current car
+Car D
+Q=80, $20k
+Comparing...
+70% Quality
+
+50%–50%
+
+70% Price
+
+F2
+
+F3
+
+F4
+
+Car X
+Q=90, $35k
+
+Car C
+Q=75, $20k
+
+Car Y
+Q=55, $10k
+
+Car D replaces
+only if it scores
+better by
+that friend’s
+own weights
+
+Replace!
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+62 / 65
+
+Step 3: Does Car D Actually Help the Neighbors?
+Friend 3 shares Car D — each neighbor checks if it beats their current car
+Car D
+Q=80, $20k
+Comparing...
+70% Quality
+
+50%–50%
+
+70% Price
+
+F2
+
+F3
+
+F4
+
+Car D
+X
+Q=80, $20k
+Q=90,
+$35k
+
+Car C
+Q=75, $20k
+
+Car Y
+Q=55, $10k
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+Car D replaces
+only if it scores
+better by
+that friend’s
+own weights
+
+February 2026
+
+62 / 65
+
+Step 3: Does Car D Actually Help the Neighbors?
+Friend 3 shares Car D — each neighbor checks if it beats their current car
+Car D
+Q=80, $20k
+Comparing...
+70% Quality
+
+50%–50%
+
+70% Price
+
+F2
+
+F3
+
+F4
+
+Car D
+Q=80, $20k
+
+Car C
+Q=75, $20k
+
+Car Y
+Q=55, $10k
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+Car D replaces
+only if it scores
+better by
+that friend’s
+own weights
+
+February 2026
+
+62 / 65
+
+Step 3: Does Car D Actually Help the Neighbors?
+Friend 3 shares Car D — each neighbor checks if it beats their current car
+Car D
+Q=80, $20k
+Comparing...
+70% Quality
+
+50%–50%
+
+70% Price
+
+F2
+
+F3
+
+F4
+
+Car D
+Q=80, $20k
+
+Car C
+Q=75, $20k
+
+Car Y
+Q=55, $10k
+
+Car D replaces
+only if it scores
+better by
+that friend’s
+own weights
+
+Replace!
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+62 / 65
+
+Step 3: Does Car D Actually Help the Neighbors?
+Friend 3 shares Car D — each neighbor checks if it beats their current car
+Car D
+Q=80, $20k
+Comparing...
+70% Quality
+
+50%–50%
+
+70% Price
+
+F2
+
+F3
+
+F4
+
+Car D
+Q=80, $20k
+
+Car D
+C
+Q=75,
+Q=80, $20k
+
+Car Y
+Q=55, $10k
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+Car D replaces
+only if it scores
+better by
+that friend’s
+own weights
+
+February 2026
+
+62 / 65
+
+Step 3: Does Car D Actually Help the Neighbors?
+Friend 3 shares Car D — each neighbor checks if it beats their current car
+Car D
+Q=80, $20k
+Comparing...
+70% Quality
+
+50%–50%
+
+70% Price
+
+F2
+
+F3
+
+F4
+
+Car D
+Q=80, $20k
+
+Car D
+Q=80, $20k
+
+Car Y
+Q=55, $10k
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+Car D replaces
+only if it scores
+better by
+that friend’s
+own weights
+
+February 2026
+
+62 / 65
+
+Step 3: Does Car D Actually Help the Neighbors?
+Friend 3 shares Car D — each neighbor checks if it beats their current car
+Car D
+Q=80, $20k
+Comparing...
+70% Quality
+
+50%–50%
+
+70% Price
+
+F2
+
+F3
+
+F4
+
+Car D
+Q=80, $20k
+
+Car D
+Q=80, $20k
+
+Car Y
+Q=55, $10k
+
+Car D replaces
+only if it scores
+better by
+that friend’s
+own weights
+
+Keep old
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+62 / 65
+
+Step 3: Does Car D Actually Help the Neighbors?
+Friend 3 shares Car D — each neighbor checks if it beats their current car
+Car D
+Q=80, $20k
+
+70% Quality
+
+50%–50%
+
+70% Price
+
+F2
+
+F3
+
+F4
+
+Car D
+Q=80, $20k
+
+Car D
+Q=80, $20k
+
+Car Y
+Q=55, $10k
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+Car D replaces
+only if it scores
+better by
+that friend’s
+own weights
+
+So one good
+discovery
+can help
+multiple nearby
+subproblems.
+
+February 2026
+
+62 / 65
+
+Step 4: Repeat Many Times — Everyone Keeps Improving
+Each friend takes turns — look at neighbors, try new car, replace if better
+
+90% Quality
+
+70% Quality
+
+50%–50%
+
+70% Price
+
+90% Price
+
+F1
+
+F2
+
+F3
+
+F4
+
+F5
+
+Car A
+Q=60
+
+Car D
+Q=80
+
+Car D
+Q=80
+
+Car Y
+Q=55
+
+Car B
+Q=50
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+63 / 65
+
+Step 4: Repeat Many Times — Everyone Keeps Improving
+Each friend takes turns — look at neighbors, try new car, replace if better
+
+90% Quality
+
+70% Quality
+
+50%–50%
+
+70% Price
+
+90% Price
+
+F1
+
+F2
+
+F3
+
+F4
+
+F5
+
+My turn!
+
+Car A
+Q=60
+
+Rashidul, Mobin, Riyad
+
+Car D
+Q=80
+
+Car D
+Q=80
+
+MOEA/D
+
+Car Y
+Q=55
+
+Car B
+Q=50
+
+February 2026
+
+63 / 65
+
+Step 4: Repeat Many Times — Everyone Keeps Improving
+Each friend takes turns — look at neighbors, try new car, replace if better
+
+90% Quality
+
+70% Quality
+
+50%–50%
+
+70% Price
+
+90% Price
+
+F1
+
+F2
+
+F3
+
+F4
+
+F5
+
+My turn!
+
+Car A
+Q=60
+
+Rashidul, Mobin, Riyad
+
+Car D
+Q=80
+
+Car D
+Q=80
+
+MOEA/D
+
+Car Y
+E
+Q=55
+$12k
+
+Car B
+Q=50
+
+February 2026
+
+63 / 65
+
+Step 4: Repeat Many Times — Everyone Keeps Improving
+Each friend takes turns — look at neighbors, try new car, replace if better
+
+90% Quality
+
+70% Quality
+
+50%–50%
+
+70% Price
+
+90% Price
+
+F1
+
+F2
+
+F3
+
+F4
+
+F5
+
+My turn!
+
+Car A
+Q=60
+
+Rashidul, Mobin, Riyad
+
+My turn!
+
+Car D
+Q=80
+
+Car D
+Q=80
+
+MOEA/D
+
+Car Y
+E
+Q=55
+$12k
+
+Car B
+Q=50
+
+February 2026
+
+63 / 65
+
+Step 4: Repeat Many Times — Everyone Keeps Improving
+Each friend takes turns — look at neighbors, try new car, replace if better
+
+90% Quality
+
+70% Quality
+
+50%–50%
+
+70% Price
+
+90% Price
+
+F1
+
+F2
+
+F3
+
+F4
+
+F5
+
+My turn!
+
+My turn!
+
+Car Y
+E
+Q=55
+$12k
+
+Car B
+Q=50
+
+My turn!
+
+Car A
+Q=60
+
+Rashidul, Mobin, Riyad
+
+Car D
+Q=80
+
+Car D
+Q=80
+
+MOEA/D
+
+February 2026
+
+63 / 65
+
+Step 4: Repeat Many Times — Everyone Keeps Improving
+Each friend takes turns — look at neighbors, try new car, replace if better
+After many rounds → each friend has the best possible car
+for their own preference = one point on the Pareto front
+
+90% Quality
+
+70% Quality
+
+50%–50%
+
+70% Price
+
+90% Price
+
+F1
+
+F2
+
+F3
+
+F4
+
+F5
+
+My turn!
+
+My turn!
+
+Car Y
+E
+Q=55
+$12k
+
+Car B+
+B
+Best
+Q=50
+$7k
+
+My turn!
+
+Best
+Car A+
+A
+Q=97
+Q=60
+
+Rashidul, Mobin, Riyad
+
+Car D
+Q=80
+
+Car D
+Q=80
+
+MOEA/D
+
+February 2026
+
+63 / 65
+
+Why is MOEA/D Evolutionary? — The Main Loop
+Create weight vectors
+and initial solutions
+
+Pick a subproblem i
+
+Select parents
+from neighbors
+No
+
+Crossover + Mutation
+
+Update neighbors
+if improved
+
+All done?
+Yes → Pareto Front!
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+64 / 65
+
+Why is MOEA/D Evolutionary? — The Main Loop
+Each full loop = one generation.
+Many generations → population
+evolves toward the Pareto front.
+
+Create weight vectors
+and initial solutions
+
+Initial Population
+
+Pick a subproblem i
+
+Select parents
+from neighbors
+
+Reproduction
+
+No =Next Generation
+Crossover +
+Mutation
+
+Crossover + Mutation
+
+Natural Selection
+
+Update neighbors
+if improved
+
+All done?
+Yes → Pareto Front!
+
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+64 / 65
+
+Conclusion
+
+“Nothing is particularly hard if you divide it into small jobs.”
+– Henry Ford
+
+Thank You!
+Rashidul, Mobin, Riyad
+
+MOEA/D
+
+February 2026
+
+65 / 65

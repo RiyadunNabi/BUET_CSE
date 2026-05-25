@@ -1,0 +1,195 @@
+Project VaultX: Performance Report
+Initial Table Size (N'): 10007
+Step size for Linear Probing (S): 5
+
+
+============================================================
+Table for Load Factor: 0.4
+============================================================
+
+### Separate Chaining with Balanced BST ###
+
+Method=Hash1, no of collisions=709
+   before deletion: avg_search_time=383.4025, avg_probes=N/A
+   after deletion: avg_search_time=429.8450, avg_probes=N/A
+Method=Hash2, no of collisions=718
+   before deletion: avg_search_time=507.5175, avg_probes=N/A
+   after deletion: avg_search_time=292.9600, avg_probes=N/A
+
+### Linear Probing with Step Adjustment ###
+
+Method=Hash1, no of collisions=1325
+   before deletion: avg_search_time=541.2525, avg_probes=1.3025
+   after deletion: avg_search_time=762.1325, avg_probes=2.3775
+Method=Hash2, no of collisions=1404
+   before deletion: avg_search_time=317.1150, avg_probes=1.3500
+   after deletion: avg_search_time=652.0075, avg_probes=2.3500
+
+### Double Hashing ###
+
+Method=Hash1, no of collisions=1137
+   before deletion: avg_search_time=599.8750, avg_probes=1.2575
+   after deletion: avg_search_time=1045.4675, avg_probes=2.1100
+Method=Hash2, no of collisions=1141
+   before deletion: avg_search_time=722.3700, avg_probes=1.3175
+   after deletion: avg_search_time=1791.8150, avg_probes=2.1200
+
+
+============================================================
+Table for Load Factor: 0.5
+============================================================
+
+### Separate Chaining with Balanced BST ###
+
+Method=Hash1, no of collisions=1094
+   before deletion: avg_search_time=503.2240, avg_probes=N/A
+   after deletion: avg_search_time=1858.8800, avg_probes=N/A
+Method=Hash2, no of collisions=1082
+   before deletion: avg_search_time=487.9340, avg_probes=N/A
+   after deletion: avg_search_time=314.7620, avg_probes=N/A
+
+### Linear Probing with Step Adjustment ###
+
+Method=Hash1, no of collisions=2565
+   before deletion: avg_search_time=596.6320, avg_probes=1.5100
+   after deletion: avg_search_time=1025.3100, avg_probes=2.9460
+Method=Hash2, no of collisions=2519
+   before deletion: avg_search_time=475.3780, avg_probes=1.5440
+   after deletion: avg_search_time=1151.4160, avg_probes=3.0720
+
+### Double Hashing ###
+
+Method=Hash1, no of collisions=2054
+   before deletion: avg_search_time=726.1260, avg_probes=1.4320
+   after deletion: avg_search_time=2400.3540, avg_probes=2.5120
+Method=Hash2, no of collisions=1969
+   before deletion: avg_search_time=651.1160, avg_probes=1.3820
+   after deletion: avg_search_time=1997.5680, avg_probes=2.3700
+
+
+============================================================
+Table for Load Factor: 0.6
+============================================================
+
+### Separate Chaining with Balanced BST ###
+
+Method=Hash1, no of collisions=1498
+   before deletion: avg_search_time=442.1300, avg_probes=N/A
+   after deletion: avg_search_time=837.6867, avg_probes=N/A
+Method=Hash2, no of collisions=1519
+   before deletion: avg_search_time=470.7600, avg_probes=N/A
+   after deletion: avg_search_time=397.7900, avg_probes=N/A
+
+### Linear Probing with Step Adjustment ###
+
+Method=Hash1, no of collisions=4538
+   before deletion: avg_search_time=1066.7950, avg_probes=1.7983
+   after deletion: avg_search_time=1599.9000, avg_probes=4.3417
+Method=Hash2, no of collisions=4756
+   before deletion: avg_search_time=769.1800, avg_probes=1.8617
+   after deletion: avg_search_time=890.3750, avg_probes=3.9300
+
+### Double Hashing ###
+
+Method=Hash1, no of collisions=3264
+   before deletion: avg_search_time=1214.7733, avg_probes=1.5033
+   after deletion: avg_search_time=2020.8250, avg_probes=2.7050
+Method=Hash2, no of collisions=3240
+   before deletion: avg_search_time=2000.9800, avg_probes=1.5283
+   after deletion: avg_search_time=1462.5350, avg_probes=2.8600
+
+
+============================================================
+Table for Load Factor: 0.7
+============================================================
+
+### Separate Chaining with Balanced BST ###
+
+Method=Hash1, no of collisions=1977
+   before deletion: avg_search_time=794.6229, avg_probes=N/A
+   after deletion: avg_search_time=494.7500, avg_probes=N/A
+Method=Hash2, no of collisions=1984
+   before deletion: avg_search_time=511.4143, avg_probes=N/A
+   after deletion: avg_search_time=348.7186, avg_probes=N/A
+
+### Linear Probing with Step Adjustment ###
+
+Method=Hash1, no of collisions=8684
+   before deletion: avg_search_time=846.9471, avg_probes=2.2914
+   after deletion: avg_search_time=2025.3200, avg_probes=6.0000
+Method=Hash2, no of collisions=8721
+   before deletion: avg_search_time=466.5186, avg_probes=2.2229
+   after deletion: avg_search_time=1872.6800, avg_probes=5.9343
+
+### Double Hashing ###
+
+Method=Hash1, no of collisions=5052
+   before deletion: avg_search_time=958.6629, avg_probes=1.6871
+   after deletion: avg_search_time=1689.0000, avg_probes=3.2957
+Method=Hash2, no of collisions=5104
+   before deletion: avg_search_time=846.4500, avg_probes=1.6857
+   after deletion: avg_search_time=2989.6971, avg_probes=3.4043
+
+
+============================================================
+Table for Load Factor: 0.8
+============================================================
+
+### Separate Chaining with Balanced BST ###
+
+Method=Hash1, no of collisions=2498
+   before deletion: avg_search_time=447.2925, avg_probes=N/A
+   after deletion: avg_search_time=1085.9050, avg_probes=N/A
+Method=Hash2, no of collisions=2512
+   before deletion: avg_search_time=275.1750, avg_probes=N/A
+   after deletion: avg_search_time=775.9700, avg_probes=N/A
+
+### Linear Probing with Step Adjustment ###
+
+Method=Hash1, no of collisions=15901
+   before deletion: avg_search_time=1000.1788, avg_probes=2.8363
+   after deletion: avg_search_time=4212.4888, avg_probes=10.1900
+Method=Hash2, no of collisions=17603
+   before deletion: avg_search_time=1170.0150, avg_probes=3.1587
+   after deletion: avg_search_time=2192.7812, avg_probes=12.4225
+
+### Double Hashing ###
+
+Method=Hash1, no of collisions=8209
+   before deletion: avg_search_time=2071.0237, avg_probes=1.9700
+   after deletion: avg_search_time=2234.2737, avg_probes=4.4625
+Method=Hash2, no of collisions=8167
+   before deletion: avg_search_time=1211.3050, avg_probes=2.1275
+   after deletion: avg_search_time=2123.2875, avg_probes=4.3937
+
+
+============================================================
+Table for Load Factor: 0.9
+============================================================
+
+### Separate Chaining with Balanced BST ###
+
+Method=Hash1, no of collisions=3076
+   before deletion: avg_search_time=912.6933, avg_probes=N/A
+   after deletion: avg_search_time=511.3711, avg_probes=N/A
+Method=Hash2, no of collisions=3085
+   before deletion: avg_search_time=304.6500, avg_probes=N/A
+   after deletion: avg_search_time=667.1278, avg_probes=N/A
+
+### Linear Probing with Step Adjustment ###
+
+Method=Hash1, no of collisions=35777
+   before deletion: avg_search_time=1623.3978, avg_probes=4.7267
+   after deletion: avg_search_time=8894.5422, avg_probes=27.2600
+Method=Hash2, no of collisions=50146
+   before deletion: avg_search_time=1231.3078, avg_probes=6.3978
+   after deletion: avg_search_time=7213.3178, avg_probes=36.4433
+
+### Double Hashing ###
+
+Method=Hash1, no of collisions=14366
+   before deletion: avg_search_time=1521.7456, avg_probes=2.8056
+   after deletion: avg_search_time=5451.4411, avg_probes=7.9011
+Method=Hash2, no of collisions=14515
+   before deletion: avg_search_time=2078.9300, avg_probes=2.5689
+   after deletion: avg_search_time=3700.8456, avg_probes=7.6322
