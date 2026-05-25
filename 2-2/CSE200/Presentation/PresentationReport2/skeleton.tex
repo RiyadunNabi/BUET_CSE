@@ -1,0 +1,358 @@
+% ============================================================
+%  CSE200 – Technical Writing and Presentation
+%  BUET | Department of CSE
+%  Report Skeleton — matches senior batch Autoencoder style
+% ============================================================
+
+\documentclass[12pt, a4paper]{article}
+
+% ── Packages ─────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}                % Clean Computer Modern font (matches senior batch)
+\usepackage[margin=1in]{geometry}   % Standard 1-inch margins
+\usepackage{graphicx}               % \includegraphics
+\usepackage{amsmath, amssymb}       % Math equations
+\usepackage{booktabs}               % Professional tables (\toprule etc.)
+\usepackage{array}                  % Better column control in tables
+\usepackage{hyperref}               % Blue hyperlinks (TOC, refs)
+\usepackage{xcolor}                 % Color support
+\usepackage{float}                  % [H] figure placement
+\usepackage{caption}                % Custom caption formatting
+\usepackage{subcaption}             % Side-by-side figures
+\usepackage{parskip}                % Space between paragraphs, no indent
+\usepackage{setspace}               % Line spacing
+\usepackage{titlesec}               % Section heading style
+\usepackage{enumitem}               % Custom lists
+\usepackage{fancyhdr}               % Header/footer
+\usepackage{lipsum}                 % Placeholder text — REMOVE when writing
+
+% ── Hyperlink colors (matches the blue TOC in senior batch) ──
+\hypersetup{
+    colorlinks = true,
+    linkcolor  = {blue!60!black},
+    citecolor  = {blue!60!black},
+    urlcolor   = {blue!60!black}
+}
+
+% ── Caption style ────────────────────────────────────────────
+\captionsetup{
+    font       = small,
+    labelfont  = bf,
+    format     = plain,
+    justification = centering
+}
+
+% ── Section heading style ────────────────────────────────────
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection}{1em}{}
+
+% ── Page style ───────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\thepage}
+
+% ── Paragraph spacing ────────────────────────────────────────
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+
+% ============================================================
+%  DOCUMENT START
+% ============================================================
+\begin{document}
+
+% ── COVER PAGE ───────────────────────────────────────────────
+\begin{titlepage}
+    \centering
+    \vspace*{0.5cm}
+
+    % University logo — replace buet_logo.png with your actual file
+    \includegraphics[width=0.35\textwidth]{images/buet_logo.png}\\[1.2cm]
+
+    {\large\textbf{CSE200 - Technical Writing and Presentation}}\\[0.8cm]
+
+    {\Large\textbf{BANGLADESH UNIVERSITY OF\\[0.2cm]
+    ENGINEERING AND TECHNOLOGY}}\\[0.4cm]
+
+    {\normalsize\textbf{DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING}}\\[2.5cm]
+
+    \rule{\textwidth}{1.5pt}\\[0.3cm]
+    {\LARGE\textbf{YOUR TOPIC TITLE HERE}}\\[0.3cm]
+    \rule{\textwidth}{1.5pt}\\[2cm]
+
+    {\normalsize 23 February 2026}\\[1.5cm]
+
+    % Group info table — left-aligned block centred on page
+    \begin{minipage}{0.5\textwidth}
+        \begin{tabbing}
+            \hspace{3.5cm} \= \kill
+            Subsection      \> : B1 \\
+            Group           \> : 4 \\
+            Md. Rashidul Islam   \> : 2205072 \\
+            Fathum Mobin   \> : 2205073 \\
+            Md. Riyadun Nabi   \> : 2205076 \\
+        \end{tabbing}
+    \end{minipage}
+
+\end{titlepage}
+
+% ── TABLE OF CONTENTS ────────────────────────────────────────
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% ── ABSTRACT ─────────────────────────────────────────────────
+\newpage
+\begin{center}
+    {\large\textbf{Abstract}}
+\end{center}
+
+% Write 150–200 words summarising: what the topic is, why it matters,
+% key components/methods, notable variants, challenges, real-world impact.
+\lipsum[1]   % ← Replace with your abstract
+
+\newpage
+
+% ============================================================
+%  SECTION 1 — Introduction
+% ============================================================
+\section{Introduction}
+
+% Motivate the topic with a real-world analogy. State what it does and
+% why it was developed. End with a brief outline of the report.
+\lipsum[2]   % ← Replace with your introduction
+
+Key capabilities include:
+\begin{itemize}
+    \item \textbf{Capability 1}: One-line description.
+    \item \textbf{Capability 2}: One-line description.
+    \item \textbf{Capability 3}: One-line description.
+\end{itemize}
+
+% ============================================================
+%  SECTION 2 — Background / Overview
+% ============================================================
+\section{Background and Overview}
+
+\lipsum[3]   % ← Replace with background
+
+\subsection{Sub-topic A}
+\lipsum[4]
+
+\subsection{Sub-topic B}
+\lipsum[5]
+
+% ============================================================
+%  SECTION 3 — Core Architecture / Concepts
+% ============================================================
+\section{Core Architecture}
+
+\lipsum[6]
+
+% ── Figure placeholder ────────────────────────────────────────
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=0.8\textwidth]{architecture.png}
+    \fbox{\rule{0pt}{5cm}\rule{0.8\textwidth}{0pt}}  % ← Remove this line when you add real figure
+    \caption{Overall architecture of \textit{Your Topic}. The diagram shows [describe what it shows].}
+    \label{fig:architecture}
+\end{figure}
+
+\subsection{Component 1}
+\lipsum[7]
+
+\subsection{Component 2}
+\lipsum[8]
+
+% ── Sub-figure example (side-by-side) ────────────────────────
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        % \includegraphics[width=\textwidth]{fig_a.png}
+        \fbox{\rule{0pt}{3cm}\rule{\textwidth}{0pt}}
+        \caption{Left subfigure caption.}
+        \label{fig:a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        % \includegraphics[width=\textwidth]{fig_b.png}
+        \fbox{\rule{0pt}{3cm}\rule{\textwidth}{0pt}}
+        \caption{Right subfigure caption.}
+        \label{fig:b}
+    \end{subfigure}
+    \caption{Comparison of (a) [left] and (b) [right] showing [describe difference].}
+    \label{fig:comparison}
+\end{figure}
+
+\subsection{Component 3}
+\lipsum[9]
+
+% ============================================================
+%  SECTION 4 — Mathematical Formulation
+% ============================================================
+\section{Mathematical Formulation}
+
+% Introduce all notation BEFORE presenting equations.
+% Always number every equation and reference them inline as Eq.~\eqref{eq:loss}.
+
+Let $\mathbf{x} \in \mathbb{R}^n$ denote the input. The primary objective is to minimise the loss function:
+
+\begin{equation}
+    \mathcal{L}(\theta) = \frac{1}{N} \sum_{i=1}^{N} \ell\!\left(y_i,\, \hat{y}_i\right)
+    \label{eq:loss}
+\end{equation}
+
+where $\theta$ are the model parameters, $y_i$ is the ground truth, and $\hat{y}_i$ is the prediction.
+
+The parameter update rule follows gradient descent:
+
+\begin{equation}
+    \theta \leftarrow \theta - \eta \, \nabla_\theta \mathcal{L}(\theta)
+    \label{eq:update}
+\end{equation}
+
+where $\eta$ is the learning rate.
+
+% ── Aligned multi-line derivation example ────────────────────
+\begin{align}
+    \log p(\mathbf{x})
+        &= \log \int p(\mathbf{x}, \mathbf{z})\, d\mathbf{z} \notag \\
+        &\geq \mathbb{E}_{q(\mathbf{z}|\mathbf{x})}
+              \left[\log \frac{p(\mathbf{x}, \mathbf{z})}{q(\mathbf{z}|\mathbf{x})}\right]
+        \label{eq:elbo}
+\end{align}
+
+% ── Notation table ────────────────────────────────────────────
+\begin{table}[H]
+    \centering
+    \caption{Summary of mathematical notation used in this report.}
+    \label{tab:notation}
+    \begin{tabular}{@{}cl@{}}
+        \toprule
+        \textbf{Symbol} & \textbf{Description} \\
+        \midrule
+        $\mathbf{x}$    & Input vector \\
+        $\mathbf{z}$    & Latent / hidden variable \\
+        $\theta$        & Model parameters \\
+        $\eta$          & Learning rate \\
+        $\mathcal{L}$   & Loss function \\
+        $N$             & Number of training samples \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% ============================================================
+%  SECTION 5 — Comparative Analysis
+% ============================================================
+\section{Comparative Analysis}
+
+\lipsum[10]
+
+\subsection{Variant / Approach A}
+\lipsum[11]
+
+\subsection{Variant / Approach B}
+\lipsum[12]
+
+\subsection{Comparison}
+
+% ── Comparison table ─────────────────────────────────────────
+\begin{table}[H]
+    \centering
+    \caption{Comparison of different approaches across key properties.}
+    \label{tab:comparison}
+    \begin{tabular}{@{}lcccc@{}}
+        \toprule
+        \textbf{Method} & \textbf{Property A} & \textbf{Property B}
+                        & \textbf{Property C} & \textbf{Best for} \\
+        \midrule
+        Method 1  & High   & Low    & Yes & Use case 1 \\
+        Method 2  & Medium & Medium & No  & Use case 2 \\
+        Method 3  & Low    & High   & Yes & Use case 3 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% ============================================================
+%  SECTION 6 — Applications and Use Cases
+% ============================================================
+\section{Applications and Use Cases}
+
+\lipsum[13]
+
+\subsection{Application Area 1}
+\lipsum[14]
+
+\subsection{Application Area 2}
+\lipsum[15]
+
+% ============================================================
+%  SECTION 7 — Advantages and Limitations
+% ============================================================
+\section{Advantages and Limitations}
+
+\subsection{Advantages}
+\begin{itemize}
+    \item \textbf{Advantage 1}: Explanation.
+    \item \textbf{Advantage 2}: Explanation.
+    \item \textbf{Advantage 3}: Explanation.
+\end{itemize}
+
+\subsection{Limitations}
+\begin{itemize}
+    \item \textbf{Limitation 1}: Explanation.
+    \item \textbf{Limitation 2}: Explanation.
+\end{itemize}
+
+% ============================================================
+%  SECTION 8 — Advanced Variants / Extensions
+% ============================================================
+\section{Advanced Variants and Extensions}
+
+\lipsum[16]
+
+\subsection{Variant 1}
+\lipsum[17]
+
+\subsection{Variant 2}
+\lipsum[18]
+
+% ============================================================
+%  SECTION 9 — Conclusion
+% ============================================================
+\section{Conclusion}
+
+% Summarise key findings. Reflect on limitations and future directions.
+% End with a forward-looking statement.
+\lipsum[19]
+
+% ============================================================
+%  REFERENCES
+% ============================================================
+\newpage
+\begin{thebibliography}{99}
+
+\bibitem{ref1}
+Author, A., Author, B., and Author, C.
+\textit{Title of the Paper}.
+Journal/Conference Name, Volume(Issue), pp.\ 1--10, Year.
+
+\bibitem{ref2}
+Author, D.
+\textit{Title of the Book}.
+Publisher, City, Year.
+
+\bibitem{ref3}
+Author, E.
+``Title of Online Article.''
+Website Name. [Online].
+Available: \url{https://www.example.com}.
+Accessed: Month DD, Year.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,439 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{empheq}
+\usepackage[most]{tcolorbox}
+
+% Boxed formula environment
+\newtcbox{\formulabox}{enhanced, on line, arc=3pt, boxrule=0.8pt,
+  colback=yellow!15, colframe=black!60,
+  left=4pt, right=4pt, top=2pt, bottom=2pt}
+
+\geometry{margin=1in}
+
+\title{\textbf{Measures of Central Tendency: Formulas \& Practice Problems}}
+\author{Based on Handwritten Notes}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{1. Arithmetic Mean / Averages}
+
+\subsection*{Formulas from Notes}
+\begin{itemize}
+    \item \textbf{Long Method:}
+    \begin{empheq}[box=\fbox]{equation*}
+        \bar{x} = \frac{\sum f_i x_i}{\sum f_i} = \frac{\sum f_i x_i}{N}
+    \end{empheq}
+    (Where $x_i = \text{Mid Value of a Class}$)
+
+    \item \textbf{Short Method:}
+    \begin{empheq}[box=\fbox]{equation*}
+        \bar{x} = a + \frac{\sum f_i d_i}{\sum f_i}
+    \end{empheq}
+    (Where $d_i = x_i - a$)
+
+    \item \textbf{Step Deviation Method:}
+    \begin{empheq}[box=\fbox]{equation*}
+        \bar{x} = a + \frac{\sum f_i u_i}{\sum f_i} \times h
+    \end{empheq}
+    (Where $u_i = \dfrac{x_i - a}{h}$ or $u_i = \dfrac{d_i}{h}$)
+\end{itemize}
+
+\hrulefill
+
+\subsection*{Practice Problem 1A: Long Method}
+Calculate the Arithmetic Mean using Long Method.
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Class Interval} & \textbf{Frequency ($f_i$)} \\ \hline
+0 - 10 & 5 \\ \hline
+10 - 20 & 8 \\ \hline
+20 - 30 & 15 \\ \hline
+30 - 40 & 10 \\ \hline
+40 - 50 & 2 \\ \hline
+\end{tabular}
+\end{center}
+
+\subsubsection*{Solution}
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Class} & $f_i$ & $x_i$ & $f_i x_i$ \\ \hline
+0-10 & 5 & 5 & 25 \\ \hline
+10-20 & 8 & 15 & 120 \\ \hline
+20-30 & 15 & 25 & 375 \\ \hline
+30-40 & 10 & 35 & 350 \\ \hline
+40-50 & 2 & 45 & 90 \\ \hline
+\textbf{Total} & $N=40$ & & $\sum f_i x_i = 960$ \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{align*}
+\bar{x} &= \frac{\sum f_i x_i}{N} \\
+        &= \frac{960}{40} \\
+        &= 24
+\end{align*}
+
+\hrulefill
+
+\subsection*{Practice Problem 1B: Short Method}
+Calculate the Arithmetic Mean using Short Method (Assumed Mean Method).
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Class Interval} & \textbf{Frequency ($f_i$)} \\ \hline
+0 - 10 & 5 \\ \hline
+10 - 20 & 8 \\ \hline
+20 - 30 & 15 \\ \hline
+30 - 40 & 10 \\ \hline
+40 - 50 & 2 \\ \hline
+\end{tabular}
+\end{center}
+
+\subsubsection*{Solution}
+Let Assumed Mean ($a$) = 25 (from class 20-30)
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Class} & $f_i$ & $x_i$ & $d_i = x_i - 25$ & $f_i d_i$ \\ \hline
+0-10 & 5 & 5 & -20 & -100 \\ \hline
+10-20 & 8 & 15 & -10 & -80 \\ \hline
+20-30 & 15 & 25 & 0 & 0 \\ \hline
+30-40 & 10 & 35 & 10 & 100 \\ \hline
+40-50 & 2 & 45 & 20 & 40 \\ \hline
+\textbf{Total} & $N=40$ & & & $\sum f_i d_i = -40$ \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{align*}
+\bar{x} &= a + \frac{\sum f_i d_i}{\sum f_i} \\
+        &= 25 + \frac{-40}{40} \\
+        &= 25 - 1 \\
+        &= 24
+\end{align*}
+
+\hrulefill
+
+\subsection*{Practice Problem 1C: Step Deviation Method}
+Calculate the Arithmetic Mean using Step Deviation Method.
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Class Interval} & \textbf{Frequency ($f_i$)} \\ \hline
+0 - 10 & 5 \\ \hline
+10 - 20 & 8 \\ \hline
+20 - 30 & 15 \\ \hline
+30 - 40 & 10 \\ \hline
+40 - 50 & 2 \\ \hline
+\end{tabular}
+\end{center}
+
+\subsubsection*{Solution}
+Let Assumed Mean ($a$) = 25 and Class Width ($h$) = 10
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Class} & $f_i$ & $x_i$ & $u_i = \frac{x_i - a}{h}$ & $f_i u_i$ \\ \hline
+0-10 & 5 & 5 & -2 & -10 \\ \hline
+10-20 & 8 & 15 & -1 & -8 \\ \hline
+20-30 & 15 & 25 $\leftarrow a$ & 0 & 0 \\ \hline
+30-40 & 10 & 35 & 1 & 10 \\ \hline
+40-50 & 2 & 45 & 2 & 4 \\ \hline
+\textbf{Total} & $N=40$ & & & $\sum f_i u_i = -4$ \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{align*}
+\bar{x} &= a + \frac{\sum f_i u_i}{\sum f_i} \times h \\
+        &= 25 + \frac{-4}{40} \times 10 \\
+        &= 25 + (-0.1 \times 10) \\
+        &= 25 - 1 \\
+        &= 24
+\end{align*}
+
+\hrulefill
+
+\subsection*{Practice Problem 1D: Combined (All Three Methods)}
+Calculate the Arithmetic Mean using all three methods for verification.
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Marks} & \textbf{No. of Students ($f_i$)} \\ \hline
+10 - 20 & 4 \\ \hline
+20 - 30 & 6 \\ \hline
+30 - 40 & 12 \\ \hline
+40 - 50 & 10 \\ \hline
+50 - 60 & 8 \\ \hline
+\end{tabular}
+\end{center}
+
+\subsubsection*{Solution}
+Let $a = 35$ (mid-value of class 30-40) and $h = 10$
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Class} & $f_i$ & $x_i$ & $f_i x_i$ & $d_i{=}x_i{-}35$ & $f_i d_i$ & $u_i{=}d_i/10$ & $f_i u_i$ \\ \hline
+10-20 & 4  & 15 & 60  & $-20$ & $-80$ & $-2$ & $-8$  \\ \hline
+20-30 & 6  & 25 & 150 & $-10$ & $-60$ & $-1$ & $-6$  \\ \hline
+30-40 & 12 & 35 & 420 &   0   &   0   &   0  &   0   \\ \hline
+40-50 & 10 & 45 & 450 &  10   & 100   &   1  &  10   \\ \hline
+50-60 & 8  & 55 & 440 &  20   & 160   &   2  &  16   \\ \hline
+\textbf{Total} & $N{=}40$ & & $\sum f_i x_i{=}1520$ & & $\sum f_i d_i{=}120$ & & $\sum f_i u_i{=}12$ \\ \hline
+\end{tabular}
+\end{center}
+
+\textbf{1. Long Method:}
+\begin{align*}
+\bar{x} &= \frac{\sum f_i x_i}{N} \\
+        &= \frac{1520}{40} \\
+        &= 38
+\end{align*}
+
+\textbf{2. Short Method:}
+\begin{align*}
+\bar{x} &= a + \frac{\sum f_i d_i}{\sum f_i} \\
+        &= 35 + \frac{120}{40} \\
+        &= 35 + 3 \\
+        &= 38
+\end{align*}
+
+\textbf{3. Step Deviation Method:}
+\begin{align*}
+\bar{x} &= a + \frac{\sum f_i u_i}{\sum f_i} \times h \\
+        &= 35 + \frac{12}{40} \times 10 \\
+        &= 35 + 3 \\
+        &= 38
+\end{align*}
+
+\newpage
+
+\section*{2. Median, Quartiles, Deciles, Percentiles}
+
+\subsection*{Formulas from Notes}
+\textbf{General Structure:}
+\begin{empheq}[box=\fbox]{equation*}
+    \text{Value} = l + \frac{\text{Position} - F_c}{f_{\text{class}}} \times h
+\end{empheq}
+
+\begin{itemize}
+    \item \textbf{Median:}
+    \begin{empheq}[box=\fbox]{equation*}
+        \text{Median} = l_1 + \frac{\dfrac{N}{2} - F_c}{f_{\text{median}}} \times h
+    \end{empheq}
+
+    \item \textbf{Quartiles:}
+    \begin{empheq}[box=\fbox]{align*}
+        Q_1 &= l_{Q1} + \frac{\dfrac{N}{4} - F_c}{f_{Q1}} \times h \\[6pt]
+        Q_3 &= l_{Q3} + \frac{\dfrac{3N}{4} - F_c}{f_{Q3}} \times h
+    \end{empheq}
+
+    \item \textbf{Decile ($D_k$ general):}
+    \begin{empheq}[box=\fbox]{equation*}
+        D_k = l_{Dk} + \frac{\dfrac{kN}{10} - F_c}{f_{Dk}} \times h
+    \end{empheq}
+
+    \item \textbf{Percentile ($P_k$ general):}
+    \begin{empheq}[box=\fbox]{equation*}
+        P_k = l_{Pk} + \frac{\dfrac{kN}{100} - F_c}{f_{Pk}} \times h
+    \end{empheq}
+\end{itemize}
+\textit{Note: In your notes, $l$ is lower limit, $h$ is class width, $F_c$ or $\sum f$ is cumulative frequency of the preceding class.}
+
+\hrulefill
+
+\subsection*{Practice Problem 2}
+Find the Median, $Q_1$, $D_4$, and $P_{62}$ for the following 
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Marks} & \textbf{Students ($f$)} \\ \hline
+0 - 10 & 4 \\ \hline
+10 - 20 & 6 \\ \hline
+20 - 30 & 10 \\ \hline
+30 - 40 & 20 \\ \hline
+40 - 50 & 10 \\ \hline
+50 - 60 & 6 \\ \hline
+\end{tabular}
+\end{center}
+
+\subsubsection*{Solution}
+First, calculate Cumulative Frequency ($F_c$). $N = 56$.
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Class} & $f$ & $F_c$ \\ \hline
+0-10 & 4 & 4 \\ \hline
+10-20 & 6 & 10 \\ \hline
+20-30 & 10 & 20 \\ \hline
+\textbf{30-40} & \textbf{20} & \textbf{40} \\ \hline
+40-50 & 10 & 50 \\ \hline
+50-60 & 6 & 56 \\ \hline
+\end{tabular}
+\end{center}
+
+\textbf{1. Median:}
+
+Position = $N/2 = 28$. This falls in class \textbf{30-40}.
+
+$l = 30, h = 10, f_{\text{median}} = 20, F_c (\text{prev}) = 20$.
+
+\begin{align*}
+\text{Median} &= l + \frac{\frac{N}{2} - F_c}{f_{\text{median}}} \times h \\
+              &= 30 + \frac{28 - 20}{20} \times 10 \\
+              &= 30 + \frac{8}{20} \times 10 \\
+              &= 30 + 4 \\
+              &= 34
+\end{align*}
+
+\textbf{2. First Quartile ($Q_1$):}
+
+Position = $N/4 = 14$. This falls in class \textbf{20-30}.
+
+$l = 20, h = 10, f_{Q1} = 10, F_c (\text{prev}) = 10$.
+
+\begin{align*}
+Q_1 &= l + \frac{\frac{N}{4} - F_c}{f_{Q1}} \times h \\
+    &= 20 + \frac{14 - 10}{10} \times 10 \\
+    &= 20 + \frac{4}{10} \times 10 \\
+    &= 20 + 4 \\
+    &= 24
+\end{align*}
+
+\textbf{3. Fourth Decile ($D_4$):}
+
+Position = $\frac{4N}{10} = \frac{4 \times 56}{10} = 22.4$. This falls in class \textbf{30-40}.
+
+$l = 30, h = 10, f_{D4} = 20, F_c (\text{prev}) = 20$.
+
+\begin{align*}
+D_4 &= l + \frac{\frac{4N}{10} - F_c}{f_{D4}} \times h \\
+    &= 30 + \frac{22.4 - 20}{20} \times 10 \\
+    &= 30 + \frac{2.4}{20} \times 10 \\
+    &= 30 + 1.2 \\
+    &= 31.2
+\end{align*}
+
+\textbf{4. 62nd Percentile ($P_{62}$):}
+
+Position = $\frac{62N}{100} = \frac{62 \times 56}{100} = 34.72$. This falls in class \textbf{30-40}.
+
+$l = 30, h = 10, f_{P62} = 20, F_c (\text{prev}) = 20$.
+
+\begin{align*}
+P_{62} &= l + \frac{\frac{62N}{100} - F_c}{f_{P62}} \times h \\
+       &= 30 + \frac{34.72 - 20}{20} \times 10 \\
+       &= 30 + \frac{14.72}{20} \times 10 \\
+       &= 30 + 7.36 \\
+       &= 37.36
+\end{align*}
+
+\newpage
+
+\section*{3. Mode}
+
+\subsection*{Formula from Notes}
+\begin{empheq}[box=\fbox]{equation*}
+    \text{Mode} = L_1 + \frac{f - f_1}{2f - f_1 - f_2} \times h
+\end{empheq}
+Where:
+\begin{itemize}
+    \item $L_1$ = Lower limit of modal class
+    \item $f$ = Frequency of modal class (highest frequency)
+    \item $f_1$ = Frequency of class \textbf{preceding} modal class
+    \item $f_2$ = Frequency of class \textbf{succeeding} modal class
+    \item $h$ = Class width
+\end{itemize}
+
+\hrulefill
+
+\subsection*{Practice Problem 3}
+Calculate the Mode for the following Age distribution (based on the example in your notes):
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Age} & \textbf{Freq} \\ \hline
+6 - 12 & 12 \\ \hline
+12 - 18 & 25 ($f_1$) \\ \hline
+18 - 24 & 35 ($f$) \\ \hline
+24 - 30 & 18 ($f_2$) \\ \hline
+\end{tabular}
+\end{center}
+(Here $h = 6$)
+
+\subsubsection*{Solution}
+The highest frequency is 35, so the Modal Class is \textbf{18-24}.
+\begin{itemize}
+    \item $L_1 = 18$
+    \item $f = 35$
+    \item $f_1 = 25$
+    \item $f_2 = 18$
+    \item $h = 6$
+\end{itemize}
+
+\begin{align*}
+\text{Mode} &= L_1 + \frac{f - f_1}{2f - f_1 - f_2} \times h \\
+            &= 18 + \frac{35 - 25}{2(35) - 25 - 18} \times 6 \\
+            &= 18 + \frac{10}{70 - 43} \times 6 \\
+            &= 18 + \frac{10}{27} \times 6 \\
+            &= 18 + \frac{60}{27} \\
+            &= 18 + 2.22 \\
+            &= 20.22
+\end{align*}
+
+\newpage
+
+\section*{4. Geometric and Harmonic Mean}
+
+\subsection*{Formulas from Notes}
+\begin{itemize}
+    \item \textbf{Geometric Mean (G.M):}
+    \begin{empheq}[box=\fbox]{equation*}
+        G.M = \sqrt[n]{x_1 \cdot x_2 \cdot x_3 \cdots x_n}
+    \end{empheq}
+
+    \item \textbf{Harmonic Mean (H.M):}
+    \begin{empheq}[box=\fbox]{equation*}
+        H.M = \frac{n}{\displaystyle\sum_{i=1}^{n} \frac{1}{x_i}} = \frac{n}{\dfrac{1}{x_1} + \dfrac{1}{x_2} + \cdots + \dfrac{1}{x_n}}
+    \end{empheq}
+\end{itemize}
+
+\hrulefill
+
+\subsection*{Practice Problem 4}
+Find the Geometric Mean and Harmonic Mean of the numbers: \textbf{2, 4, 8}.
+
+\subsubsection*{Solution}
+Here $n=3$, $x_1=2, x_2=4, x_3=8$.
+
+\textbf{1. Geometric Mean:}
+\begin{align*}
+G.M &= \sqrt[n]{x_1 \cdot x_2 \cdot x_3} \\
+    &= \sqrt[3]{2 \cdot 4 \cdot 8} \\
+    &= \sqrt[3]{64} \\
+    &= 4
+\end{align*}
+
+\textbf{2. Harmonic Mean:}
+\begin{align*}
+H.M &= \frac{n}{\frac{1}{x_1} + \frac{1}{x_2} + \frac{1}{x_3}} \\
+    &= \frac{3}{\frac{1}{2} + \frac{1}{4} + \frac{1}{8}} \\
+    &= \frac{3}{\frac{4 + 2 + 1}{8}} \\
+    &= \frac{3}{\frac{7}{8}} \\
+    &= 3 \times \frac{8}{7} \\
+    &= \frac{24}{7} \\
+    &= 3.43
+\end{align*}
+
+\end{document}
