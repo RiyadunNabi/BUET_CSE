@@ -1,0 +1,61 @@
+-------------Testing Queue based Stack-------------
+Pushed 10 onto the stack.
+Current stack: 10 
+-------------------
+Pushed 20 onto the stack.
+Current stack: 10 20 
+-------------------
+Pushed 30 onto the stack.
+Current stack: 10 20 30 
+-------------------
+Pushed 40 onto the stack.
+Current stack: 10 20 30 40 
+-------------------
+Popped value: 40
+Current stack: 10 20 30 
+-------------------
+Popped value: 30
+Current stack: 10 20 
+-------------------
+Top value: 20
+Current stack: 10 20 
+-------------------
+Pushed 60 onto the stack.
+Current stack: 10 20 60 
+-------------------
+Pushed 80 onto the stack.
+Current stack: 10 20 60 80 
+-------------------
+Popped value: 80
+Current stack: 10 20 60 
+-------------------
+Popped value: 60
+Current stack: 10 20 
+-------------------
+Top value: 20
+Current stack: 10 20 
+-------------------
+Popped value: 20
+Current stack: 10 
+-------------------
+Top value: 10
+Current stack: 10 
+-------------------
+Popped value: 10
+Current stack: 
+-------------------
+Stack is empty, nothing to pop.
+Current stack: 
+-------------------
+Stack is empty, nothing to pop.
+Current stack: 
+-------------------
+Stack is empty, no top element.
+Current stack: 
+-------------------
+Pushed 15 onto the stack.
+Current stack: 15 
+-------------------
+Pushed 25 onto the stack.
+Current stack: 15 25 
+-------------------

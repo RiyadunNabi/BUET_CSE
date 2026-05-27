@@ -1,0 +1,109 @@
+-------------Testing Linked-List based Queue-------------
+Enqueued 10 onto the queue.
+Current queue: 10 
+-------------------
+Enqueued 20 onto the queue.
+Current queue: 10 20 
+-------------------
+Enqueued 30 onto the queue.
+Current queue: 10 20 30 
+-------------------
+Enqueued 40 onto the queue.
+Current queue: 10 20 30 40 
+-------------------
+Dequeued value: 10
+Current queue: 20 30 40 
+-------------------
+Dequeued value: 20
+Current queue: 30 40 
+-------------------
+Peek value: 30
+Current queue: 30 40 
+-------------------
+Current queue length: 2
+Current queue: 30 40 
+-------------------
+Is queue empty? No
+Current queue: 30 40 
+-------------------
+Cleared the queue.
+Current queue: 
+-------------------
+Is queue empty? Yes
+Current queue: 
+-------------------
+Current queue length: 0
+Current queue: 
+-------------------
+Enqueued 14 onto the queue.
+Current queue: 14 
+-------------------
+Enqueued 20 onto the queue.
+Current queue: 14 20 
+-------------------
+Enqueued 30 onto the queue.
+Current queue: 14 20 30 
+-------------------
+Enqueued 40 onto the queue.
+Current queue: 14 20 30 40 
+-------------------
+Dequeued value: 14
+Current queue: 20 30 40 
+-------------------
+Dequeued value: 20
+Current queue: 30 40 
+-------------------
+Dequeued value: 30
+Current queue: 40 
+-------------------
+Dequeued value: 40
+Current queue: 
+-------------------
+Queue is empty, nothing to dequeue.
+Current queue: 
+-------------------
+Enqueued 10 onto the queue.
+Current queue: 10 
+-------------------
+Enqueued 20 onto the queue.
+Current queue: 10 20 
+-------------------
+Enqueued 30 onto the queue.
+Current queue: 10 20 30 
+-------------------
+Enqueued 40 onto the queue.
+Current queue: 10 20 30 40 
+-------------------
+Enqueued 50 onto the queue.
+Current queue: 10 20 30 40 50 
+-------------------
+Enqueued 60 onto the queue.
+Current queue: 10 20 30 40 50 60 
+-------------------
+Enqueued 70 onto the queue.
+Current queue: 10 20 30 40 50 60 70 
+-------------------
+Enqueued 80 onto the queue.
+Current queue: 10 20 30 40 50 60 70 80 
+-------------------
+Dequeued value: 10
+Current queue: 20 30 40 50 60 70 80 
+-------------------
+Peek value: 20
+Current queue: 20 30 40 50 60 70 80 
+-------------------
+Current queue length: 7
+Current queue: 20 30 40 50 60 70 80 
+-------------------
+Is queue empty? No
+Current queue: 20 30 40 50 60 70 80 
+-------------------
+Invalid operation: 999
+Current queue: 20 30 40 50 60 70 80 
+-------------------
+Cleared the queue.
+Current queue: 
+-------------------
+Enqueued 10 onto the queue.
+Current queue: 10 
+-------------------

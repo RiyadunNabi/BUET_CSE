@@ -1,0 +1,1 @@
+This is a string stored in file 5.2 .
