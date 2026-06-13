@@ -1,0 +1,150 @@
+package io;
+
+import model.Expense;
+import service.Summarizer;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Map;
+
+public class HtmlReportBuilder implements ReportBuilder {
+
+    private final BufferedWriter writer;
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter MONTH_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM");
+
+    public HtmlReportBuilder(String filePath) throws IOException {
+        this.writer = new BufferedWriter(new FileWriter(filePath));
+    }
+
+    @Override
+    public void buildHeader() throws IOException {
+        writer.write("<!DOCTYPE html>\n");
+        writer.write("<html>\n<head>\n");
+        writer.write("<title>BudgetBuddy Expense Report</title>\n");
+        writer.write("<style>\n");
+        writer.write("body { font-family: Arial, sans-serif; margin: 20px; }\n");
+        writer.write("h1 { color: #333; }\n");
+        writer.write("table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }\n");
+        writer.write("th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }\n");
+        writer.write("th { background-color: #4CAF50; color: white; }\n");
+        writer.write(".bar { background-color: #4CAF50; height: 20px; display: inline-block; }\n");
+        writer.write(".total { font-weight: bold; font-size: 1.2em; color: #4CAF50; }\n");
+        writer.write("</style>\n");
+        writer.write("</head>\n<body>\n");
+        writer.write("<h1>BudgetBuddy Expense Report</h1>\n");
+    }
+
+    @Override
+    public void buildMonthlySummary(Summarizer summarizer) throws IOException {
+        writer.write("<h2>Monthly Summary</h2>\n");
+        writer.write("<table>\n");
+        writer.write("<tr><th>Month</th><th>Total Amount</th></tr>\n");
+
+        Map<YearMonth, Double> monthlyTotals = summarizer.monthlyTotals();
+        for (Map.Entry<YearMonth, Double> entry : monthlyTotals.entrySet()) {
+            String monthStr = entry.getKey().format(MONTH_FORMATTER);
+            String amountStr = String.format("%.2f", entry.getValue());
+            writer.write(String.format("<tr><td>%s</td><td>%s</td></tr>\n", monthStr, amountStr));
+        }
+        writer.write("</table>\n");
+    }
+// ....
+//  @Override
+//     public void buildMonthlySummary(Summarizer summarizer) throws IOException {
+//         writer.write("<h2>Monthly Summary</h2>\n<table>\n<tr><th>Month</th><th>Total</th></tr>\n");
+//         for (Map.Entry<java.time.YearMonth, Double> entry : summarizer.monthlyTotals().entrySet()) {
+//             writer.write(String.format("<tr><td>%s</td><td>%.2f</td></tr>\n",
+//                     entry.getKey().format(MONTH_FORMATTER), entry.getValue()));
+//         }
+//         writer.write("</table>\n");
+//     }
+// ....
+
+
+     @Override
+    public void buildCategoryBreakdown(Summarizer summarizer) throws IOException {
+        writer.write("<h2>Category Breakdown (All Time)</h2>\n");
+        writer.write("<table>\n");
+        writer.write("<tr><th>Category</th><th>Total Amount</th><th>Visual</th></tr>\n");
+
+        Map<String, Double> categoryTotals = summarizer.categoryTotals(null);
+        double maxAmount = categoryTotals.values().stream()
+                .max(Double::compareTo)
+                .orElse(1.0);
+
+        for (Map.Entry<String, Double> entry : categoryTotals.entrySet()) {
+            String category = entry.getKey();
+            double amount = entry.getValue();
+            String amountStr = String.format("%.2f", entry.getValue());
+            String barHtml = createBarHtml(amount, maxAmount);
+            writer.write(String.format("<tr><td>%s</td><td>%s</td><td>%s</td></tr>\n",
+                    category, amountStr, barHtml));
+        }
+        writer.write("</table>\n");
+    }
+
+    // @Override
+    // public void buildCategoryBreakdown(Summarizer summarizer) throws IOException {
+    //     writer.write("<h2>Category Breakdown</h2>\n<table>\n<tr><th>Category</th><th>Amount</th><th>Visual</th></tr>\n");
+        
+    //     Map<String, Double> totals = summarizer.categoryTotals(null);
+    //     double max = totals.values().stream().max(Double::compareTo).orElse(1.0);
+
+    //     for (Map.Entry<String, Double> entry : totals.entrySet()) {
+    //         int width = (int) Math.round((entry.getValue() * 200) / max);
+    //         writer.write(String.format("<tr><td>%s</td><td>%.2f</td><td><div class='bar' style='width:%dpx'></div></td></tr>\n",
+    //                 entry.getKey(), entry.getValue(), width));
+    //     }
+    //     writer.write("</table>\n");
+    // }
+
+    @Override
+    public void buildGrandTotal(Summarizer summarizer) throws IOException {
+        writer.write(String.format("<p class=\"total\">Grand Total: %s</p>\n",
+            String.format("%.2f", summarizer.grandTotal())));
+    }
+
+    @Override
+    public void buildRecentEntries(List<Expense> expenses) throws IOException {
+        writer.write("<h2>Recent Entries (Last 10)</h2>\n");
+        writer.write("<table>\n");
+        writer.write("<tr><th>Date</th><th>Category</th><th>Amount</th><th>Notes</th></tr>\n");
+
+        int count = 0;
+        for (int i = expenses.size() - 1; i >= 0 && count < 10; i--, count++) {
+            Expense exp = expenses.get(i);
+            String dateStr = exp.getDate().format(DATE_FORMATTER);
+            writer.write(String.format("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>\n",
+                    dateStr,
+                    exp.getCategory(),
+                    String.format("%.2f", exp.getAmount()),
+                    exp.getNotes()));
+        }
+        writer.write("</table>\n");
+
+        // writer.write("<h2>Recent Entries</h2>\n<table>\n<tr><th>Date</th><th>Category</th><th>Amount</th><th>Notes</th></tr>\n");
+        // int count = 0;
+        // for (int i = expenses.size() - 1; i >= 0 && count < 10; i--, count++) {
+        //     Expense exp = expenses.get(i);
+        //     writer.write(String.format("<tr><td>%s</td><td>%s</td><td>%.2f</td><td>%s</td></tr>\n",
+        //             exp.getDate().format(DATE_FORMATTER), exp.getCategory(), exp.getAmount(), exp.getNotes()));
+        // }
+        // writer.write("</table>\n");
+    }
+
+    @Override
+    public void buildFooter() throws IOException {
+        writer.write("</body>\n</html>\n");
+        writer.close();
+    }
+    
+    private String createBarHtml(double value, double maxValue) {
+        int barWidth = (int) Math.round((value * 200) / maxValue);
+        return String.format("<div class=\"bar\" style=\"width: %dpx;\"></div>", barWidth);
+    }
+}
