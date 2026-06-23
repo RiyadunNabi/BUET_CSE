@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "BrowserSync — Drive Backup",
+  "version": "1.0.0",
+  "description": "Sync bookmarks, history, passwords export, and extensions list to Google Drive.",
+  "permissions": [
+    "bookmarks",
+    "history",
+    "storage",
+    "identity",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://www.googleapis.com/*",
+    "https://accounts.google.com/*"
+  ],
+  "oauth2": {
+    "client_id": "YOUR_GOOGLE_OAUTH_CLIENT_ID.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/drive.file"
+    ]
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

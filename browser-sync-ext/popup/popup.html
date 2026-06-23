@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrowserSync</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2a2d3a;
+      --accent: #5b6ef5;
+      --accent-hover: #4a5de0;
+      --green: #3ecf8e;
+      --red: #f55b6e;
+      --yellow: #f5c542;
+      --text: #e8eaf0;
+      --muted: #7a7f9a;
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 320px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 13px;
+      padding: 16px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .logo {
+      width: 32px; height: 32px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+
+    .header-text h1 { font-size: 14px; font-weight: 600; }
+    .header-text p { font-size: 11px; color: var(--muted); }
+
+    .last-backup {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .last-backup span { color: var(--green); font-weight: 500; }
+
+    .section-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px 14px;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: background 0.15s, opacity 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
+
+    .btn-outline {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .status-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      font-size: 12px;
+      min-height: 36px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .status-box.visible { display: block; }
+
+    .ext-list {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      max-height: 180px;
+      overflow-y: auto;
+      display: none;
+      margin-bottom: 10px;
+    }
+    .ext-list.visible { display: block; }
+
+    .ext-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      gap: 8px;
+    }
+    .ext-item:last-child { border-bottom: none; }
+
+    .ext-name {
+      font-size: 12px;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ext-name.disabled { color: var(--muted); text-decoration: line-through; }
+
+    .ext-link {
+      font-size: 11px;
+      color: var(--accent);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .ext-link:hover { text-decoration: underline; }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-top: 1px solid var(--border);
+    }
+    .toggle-row label { font-size: 12px; color: var(--muted); }
+
+    .toggle {
+      position: relative;
+      width: 36px; height: 20px;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: var(--border);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .slider::before {
+      content: '';
+      position: absolute;
+      width: 14px; height: 14px;
+      left: 3px; top: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    input:checked + .slider { background: var(--accent); }
+    input:checked + .slider::before { transform: translateX(16px); }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">☁</div>
+  <div class="header-text">
+    <h1>BrowserSync</h1>
+    <p>Drive backup for your browser</p>
+  </div>
+</div>
+
+<div class="last-backup" id="lastBackupInfo">
+  Last backup: <span id="lastBackupTime">Never</span>
+</div>
+
+<div class="section-label">Backup</div>
+<div class="btn-group">
+  <button class="btn btn-primary" id="backupBtn">
+    ☁ Backup everything now
+  </button>
+</div>
+
+<div class="section-label">Restore</div>
+<div class="btn-group">
+  <div class="btn-row">
+    <button class="btn btn-outline" id="restoreBookmarks">🔖 Bookmarks</button>
+    <button class="btn btn-outline" id="restoreExtList">🧩 Extensions</button>
+  </div>
+</div>
+
+<div class="status-box" id="statusBox"></div>
+
+<div class="ext-list" id="extList"></div>
+
+<div class="toggle-row">
+  <label for="autoBackupToggle">Auto-backup on browser start</label>
+  <label class="toggle">
+    <input type="checkbox" id="autoBackupToggle" />
+    <span class="slider"></span>
+  </label>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
