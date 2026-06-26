@@ -4,6 +4,27 @@
 *.class
 
 
+# Editor
+.vscode/
+
+# Linux junk
+*~
+.directory
+
+# Python (you use it)
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Node/JS (for any web stuff)
+node_modules/
+.env
+
+# Logs
+*.log
+
+
 
 1-1/MyProject/
 1-2/CSE 108/Project/MyJavaFXProject/
