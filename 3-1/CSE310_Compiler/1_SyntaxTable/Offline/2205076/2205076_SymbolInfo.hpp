@@ -43,7 +43,7 @@ public:
 	void showSymbolInfo()
 	{
 		cout<<endl<<"Symbol Info:"<<endl;
-		cout<<"Name = "<<name<<endl;
+		cout<<"Name : "<<name<<endl;
 		cout<<"Type = "<<type<<endl;
 		cout<<endl;
 	}

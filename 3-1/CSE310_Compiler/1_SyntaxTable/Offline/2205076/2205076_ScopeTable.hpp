@@ -9,18 +9,17 @@ using namespace std;
 
 class ScopeTable {
 private:
+    int scope_id;              // Unique identifier for this scope [cite: 260]
+
     int num_buckets;           // Total number of buckets in the hash table [cite: 258]
     SymbolInfo** buckets;      // Array of SymbolInfo pointers for separate chaining [cite: 235]
     
     ScopeTable* parent_scope;  // Pointer to the parent scope table [cite: 259]
-    int scope_id;              // Unique identifier for this scope [cite: 260]
 
     ostream& out; // The stream where all prints will go
 
 public:
-    ScopeTable(int n, int id, ScopeTable* parent, ostream& out_stream = cout) 
-        : out(out_stream) 
-    {
+    ScopeTable(int n, int id, ScopeTable* parent, ostream& out_stream = cout) : out(out_stream) {
         this->num_buckets = n;
         this->scope_id = id;
         this->parent_scope = parent;
@@ -31,7 +30,6 @@ public:
         }
     }
 
-    // Destructor: Safely deallocate all memory [cite: 272, 327]
     ~ScopeTable() {
         for (int i = 0; i < num_buckets; i++) {
             SymbolInfo* curr = buckets[i];
