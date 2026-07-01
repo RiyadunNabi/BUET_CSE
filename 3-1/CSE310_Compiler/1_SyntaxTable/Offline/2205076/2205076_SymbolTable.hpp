@@ -18,7 +18,7 @@ public:
         current_scope = nullptr;
         scope_count = 0;
         
-        // Immediately enter the global scope upon creation [cite: 355]
+        // Immediately enter the global scope upon creation of the symbol table
         EnterScope();
     }
 
